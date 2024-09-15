@@ -2,7 +2,6 @@ package Entities;
 
 import Enums.TypeComposant;
 
-import java.util.UUID;
 
 public class Matériaux extends Composants {
     private Integer id;

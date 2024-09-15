@@ -2,16 +2,15 @@ package Entities;
 
 import Enums.EtatProject;
 
-import java.util.UUID;
 
 public class Projet {
-    private UUID id;
+    private Integer id;
     private String nomProjet;
     private Double margeBeneficiaire;
     private Double coutTotal;
     private EtatProject etatProjet;
 
-    public Projet(UUID id, String nomProjet, Double margeBeneficiaire, Double coutTotal, EtatProject etatProjet) {
+    public Projet(Integer id, String nomProjet, Double margeBeneficiaire, Double coutTotal, EtatProject etatProjet) {
         this.id = id;
         this.nomProjet = nomProjet;
         this.margeBeneficiaire = margeBeneficiaire;
@@ -19,11 +18,11 @@ public class Projet {
         this.etatProjet = etatProjet;
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

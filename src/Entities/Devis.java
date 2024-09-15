@@ -4,25 +4,25 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class Devis {
-    private UUID id;
+    private Integer id;
     private Double montantEstime;
     private LocalDate dateEmission;
     private LocalDate dateValidite;
     private Boolean accepte;
 
-    public Devis(UUID id, Double montantEstime, LocalDate dateEmission, LocalDate dateValidite, Boolean accepte) {
-        this.id = id;
-        this.montantEstime = montantEstime;
-        this.dateEmission = dateEmission;
-        this.dateValidite = dateValidite;
+    public Devis(Boolean accepte, LocalDate dateValidite, LocalDate dateEmission, Double montantEstime, Integer id) {
         this.accepte = accepte;
+        this.dateValidite = dateValidite;
+        this.dateEmission = dateEmission;
+        this.montantEstime = montantEstime;
+        this.id = id;
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

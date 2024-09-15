@@ -3,13 +3,13 @@ package Entities;
 import java.util.UUID;
 
 public class Client {
-    private UUID id;
+    private Integer id;
     private String nom;
     private String adresse;
     private String telephone;
     private Boolean estProfessionnel;
 
-    public Client(UUID id, String nom, String adresse, String telephone, Boolean estProfessionnel) {
+    public Client(Integer id, String nom, String adresse, String telephone, Boolean estProfessionnel) {
         this.id = id;
         this.nom = nom;
         this.adresse = adresse;
@@ -17,11 +17,11 @@ public class Client {
         this.estProfessionnel = estProfessionnel;
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

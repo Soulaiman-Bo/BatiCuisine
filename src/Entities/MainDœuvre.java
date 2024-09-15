@@ -2,7 +2,6 @@ package Entities;
 
 import Enums.TypeComposant;
 
-import java.util.UUID;
 
 public class MainDœuvre extends Composants {
     private Integer id;
