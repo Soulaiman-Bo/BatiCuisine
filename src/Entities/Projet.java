@@ -5,17 +5,17 @@ import Enums.EtatProject;
 
 public class Projet {
     private Integer id;
-    private String nomProjet;
-    private Double margeBeneficiaire;
-    private Double coutTotal;
-    private EtatProject etatProjet;
+    private String projectName;
+    private Double profit;
+    private Double totalCost;
+    private EtatProject projectStatus;
 
-    public Projet(Integer id, String nomProjet, Double margeBeneficiaire, Double coutTotal, EtatProject etatProjet) {
+    public Projet(Integer id, String projectName, Double profit, Double totalCost, EtatProject projectStatus) {
         this.id = id;
-        this.nomProjet = nomProjet;
-        this.margeBeneficiaire = margeBeneficiaire;
-        this.coutTotal = coutTotal;
-        this.etatProjet = etatProjet;
+        this.projectName = projectName;
+        this.profit = profit;
+        this.totalCost = totalCost;
+        this.projectStatus = projectStatus;
     }
 
     public Integer getId() {
@@ -26,35 +26,35 @@ public class Projet {
         this.id = id;
     }
 
-    public String getNomProjet() {
-        return nomProjet;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setNomProjet(String nomProjet) {
-        this.nomProjet = nomProjet;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
-    public Double getCoutTotal() {
-        return coutTotal;
+    public Double getProfit() {
+        return profit;
     }
 
-    public void setCoutTotal(Double coutTotal) {
-        this.coutTotal = coutTotal;
+    public void setProfit(Double profit) {
+        this.profit = profit;
     }
 
-    public EtatProject getEtatProjet() {
-        return etatProjet;
+    public Double getTotalCost() {
+        return totalCost;
     }
 
-    public void setEtatProjet(EtatProject etatProjet) {
-        this.etatProjet = etatProjet;
+    public void setTotalCost(Double totalCost) {
+        this.totalCost = totalCost;
     }
 
-    public Double getMargeBeneficiaire() {
-        return margeBeneficiaire;
+    public EtatProject getProjectStatus() {
+        return projectStatus;
     }
 
-    public void setMargeBeneficiaire(Double margeBeneficiaire) {
-        this.margeBeneficiaire = margeBeneficiaire;
+    public void setProjectStatus(EtatProject projectStatus) {
+        this.projectStatus = projectStatus;
     }
 }

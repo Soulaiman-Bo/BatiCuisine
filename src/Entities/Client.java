@@ -4,17 +4,17 @@ import java.util.UUID;
 
 public class Client {
     private Integer id;
-    private String nom;
-    private String adresse;
-    private String telephone;
-    private Boolean estProfessionnel;
+    private String name;
+    private String address;
+    private String phoneNumber;
+    private Boolean isProfessional;
 
-    public Client(Integer id, String nom, String adresse, String telephone, Boolean estProfessionnel) {
+    public Client(Integer id, String name, String address, String phoneNumber, Boolean isProfessional) {
         this.id = id;
-        this.nom = nom;
-        this.adresse = adresse;
-        this.telephone = telephone;
-        this.estProfessionnel = estProfessionnel;
+        this.name = name;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.isProfessional = isProfessional;
     }
 
     public Integer getId() {
@@ -25,35 +25,35 @@ public class Client {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getAdresse() {
-        return adresse;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getTelephone() {
-        return telephone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public Boolean getEstProfessionnel() {
-        return estProfessionnel;
+    public Boolean getProfessional() {
+        return isProfessional;
     }
 
-    public void setEstProfessionnel(Boolean estProfessionnel) {
-        this.estProfessionnel = estProfessionnel;
+    public void setProfessional(Boolean professional) {
+        isProfessional = professional;
     }
 }

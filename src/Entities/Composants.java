@@ -1,27 +1,27 @@
 package Entities;
 
 public class Composants {
-    private String nom;
-    private Double tauxTVA;
+    private String name;
+    private Double taxRate;
 
-    public Composants(String nom, Double tauxTVA) {
-        this.nom = nom;
-        this.tauxTVA = tauxTVA;
+    public Composants(String name, Double taxRate) {
+        this.name = name;
+        this.taxRate = taxRate;
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Double getTauxTVA() {
-        return tauxTVA;
+    public Double getTaxRate() {
+        return taxRate;
     }
 
-    public void setTauxTVA(Double tauxTVA) {
-        this.tauxTVA = tauxTVA;
+    public void setTaxRate(Double taxRate) {
+        this.taxRate = taxRate;
     }
 }

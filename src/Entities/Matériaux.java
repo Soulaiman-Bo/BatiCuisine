@@ -6,19 +6,19 @@ import Enums.TypeComposant;
 public class Matériaux extends Composants {
     private Integer id;
     private TypeComposant typeComposant;
-    private Double coutUnitaire;
-    private Double quantite;
-    private Double coutTransport;
-    private Double coefficientQualite;
+    private Double unitCost;
+    private Double quantity;
+    private Double transportCost;
+    private Double qualityCoefficient;
 
-    public Matériaux(String nom, Double tauxTVA, Integer id, TypeComposant typeComposant, Double coutUnitaire, Double quantite, Double coutTransport, Double coefficientQualite) {
-        super(nom, tauxTVA);
+    public Matériaux(String name, Double taxRate, Integer id, TypeComposant typeComposant, Double unitCost, Double quantity, Double transportCost, Double qualityCoefficient) {
+        super(name, taxRate);
         this.id = id;
         this.typeComposant = typeComposant;
-        this.coutUnitaire = coutUnitaire;
-        this.quantite = quantite;
-        this.coutTransport = coutTransport;
-        this.coefficientQualite = coefficientQualite;
+        this.unitCost = unitCost;
+        this.quantity = quantity;
+        this.transportCost = transportCost;
+        this.qualityCoefficient = qualityCoefficient;
     }
 
     public Integer getId() {
@@ -37,35 +37,35 @@ public class Matériaux extends Composants {
         this.typeComposant = typeComposant;
     }
 
-    public Double getCoutUnitaire() {
-        return coutUnitaire;
+    public Double getUnitCost() {
+        return unitCost;
     }
 
-    public void setCoutUnitaire(Double coutUnitaire) {
-        this.coutUnitaire = coutUnitaire;
+    public void setUnitCost(Double unitCost) {
+        this.unitCost = unitCost;
     }
 
-    public Double getQuantite() {
-        return quantite;
+    public Double getQuantity() {
+        return quantity;
     }
 
-    public void setQuantite(Double quantite) {
-        this.quantite = quantite;
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
     }
 
-    public Double getCoutTransport() {
-        return coutTransport;
+    public Double getTransportCost() {
+        return transportCost;
     }
 
-    public void setCoutTransport(Double coutTransport) {
-        this.coutTransport = coutTransport;
+    public void setTransportCost(Double transportCost) {
+        this.transportCost = transportCost;
     }
 
-    public Double getCoefficientQualite() {
-        return coefficientQualite;
+    public Double getQualityCoefficient() {
+        return qualityCoefficient;
     }
 
-    public void setCoefficientQualite(Double coefficientQualite) {
-        this.coefficientQualite = coefficientQualite;
+    public void setQualityCoefficient(Double qualityCoefficient) {
+        this.qualityCoefficient = qualityCoefficient;
     }
 }

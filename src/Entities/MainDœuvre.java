@@ -5,18 +5,18 @@ import Enums.TypeComposant;
 
 public class MainDœuvre extends Composants {
     private Integer id;
-    private TypeComposant typeComposant;
-    private Double tauxHoraire;
-    private Double heuresTravail;
-    private Double productiviteOuvrier;
+    private TypeComposant componentType;
+    private Double hourlyRate;
+    private Double workHoursCount;
+    private Double productivityRate;
 
-    public MainDœuvre(String nom, Double tauxTVA, Integer id, TypeComposant typeComposant, Double tauxHoraire, Double heuresTravail, Double productiviteOuvrier) {
-        super(nom, tauxTVA);
+    public MainDœuvre(String name, Double taxRate, Integer id, TypeComposant componentType, Double hourlyRate, Double workHoursCount, Double productivityRate) {
+        super(name, taxRate);
         this.id = id;
-        this.typeComposant = typeComposant;
-        this.tauxHoraire = tauxHoraire;
-        this.heuresTravail = heuresTravail;
-        this.productiviteOuvrier = productiviteOuvrier;
+        this.componentType = componentType;
+        this.hourlyRate = hourlyRate;
+        this.workHoursCount = workHoursCount;
+        this.productivityRate = productivityRate;
     }
 
     public Integer getId() {
@@ -27,35 +27,35 @@ public class MainDœuvre extends Composants {
         this.id = id;
     }
 
-    public TypeComposant getTypeComposant() {
-        return typeComposant;
+    public TypeComposant getComponentType() {
+        return componentType;
     }
 
-    public void setTypeComposant(TypeComposant typeComposant) {
-        this.typeComposant = typeComposant;
+    public void setComponentType(TypeComposant componentType) {
+        this.componentType = componentType;
     }
 
-    public Double getTauxHoraire() {
-        return tauxHoraire;
+    public Double getHourlyRate() {
+        return hourlyRate;
     }
 
-    public void setTauxHoraire(Double tauxHoraire) {
-        this.tauxHoraire = tauxHoraire;
+    public void setHourlyRate(Double hourlyRate) {
+        this.hourlyRate = hourlyRate;
     }
 
-    public Double getHeuresTravail() {
-        return heuresTravail;
+    public Double getWorkHoursCount() {
+        return workHoursCount;
     }
 
-    public void setHeuresTravail(Double heuresTravail) {
-        this.heuresTravail = heuresTravail;
+    public void setWorkHoursCount(Double workHoursCount) {
+        this.workHoursCount = workHoursCount;
     }
 
-    public Double getProductiviteOuvrier() {
-        return productiviteOuvrier;
+    public Double getProductivityRate() {
+        return productivityRate;
     }
 
-    public void setProductiviteOuvrier(Double productiviteOuvrier) {
-        this.productiviteOuvrier = productiviteOuvrier;
+    public void setProductivityRate(Double productivityRate) {
+        this.productivityRate = productivityRate;
     }
 }

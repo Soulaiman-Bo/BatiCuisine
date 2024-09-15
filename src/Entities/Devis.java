@@ -5,17 +5,17 @@ import java.util.UUID;
 
 public class Devis {
     private Integer id;
-    private Double montantEstime;
-    private LocalDate dateEmission;
-    private LocalDate dateValidite;
-    private Boolean accepte;
+    private Double estimatedPrice;
+    private LocalDate issueDate;
+    private LocalDate validityDate;
+    private Boolean accepted;
 
-    public Devis(Boolean accepte, LocalDate dateValidite, LocalDate dateEmission, Double montantEstime, Integer id) {
-        this.accepte = accepte;
-        this.dateValidite = dateValidite;
-        this.dateEmission = dateEmission;
-        this.montantEstime = montantEstime;
+    public Devis(Integer id, Double estimatedPrice, LocalDate issueDate, LocalDate validityDate, Boolean accepted) {
         this.id = id;
+        this.estimatedPrice = estimatedPrice;
+        this.issueDate = issueDate;
+        this.validityDate = validityDate;
+        this.accepted = accepted;
     }
 
     public Integer getId() {
@@ -26,35 +26,35 @@ public class Devis {
         this.id = id;
     }
 
-    public Double getMontantEstime() {
-        return montantEstime;
+    public Double getEstimatedPrice() {
+        return estimatedPrice;
     }
 
-    public void setMontantEstime(Double montantEstime) {
-        this.montantEstime = montantEstime;
+    public void setEstimatedPrice(Double estimatedPrice) {
+        this.estimatedPrice = estimatedPrice;
     }
 
-    public LocalDate getDateEmission() {
-        return dateEmission;
+    public LocalDate getIssueDate() {
+        return issueDate;
     }
 
-    public void setDateEmission(LocalDate dateEmission) {
-        this.dateEmission = dateEmission;
+    public void setIssueDate(LocalDate issueDate) {
+        this.issueDate = issueDate;
     }
 
-    public LocalDate getDateValidite() {
-        return dateValidite;
+    public LocalDate getValidityDate() {
+        return validityDate;
     }
 
-    public void setDateValidite(LocalDate dateValidite) {
-        this.dateValidite = dateValidite;
+    public void setValidityDate(LocalDate validityDate) {
+        this.validityDate = validityDate;
     }
 
-    public Boolean getAccepte() {
-        return accepte;
+    public Boolean getAccepted() {
+        return accepted;
     }
 
-    public void setAccepte(Boolean accepte) {
-        this.accepte = accepte;
+    public void setAccepted(Boolean accepted) {
+        this.accepted = accepted;
     }
 }
