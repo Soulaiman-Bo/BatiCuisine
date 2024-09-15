@@ -4,41 +4,38 @@ import Enums.TypeComposant;
 
 import java.util.UUID;
 
-public class Matériaux {
-    private UUID id;
-    private String nom;
+public class Matériaux extends Composants {
+    private Integer id;
+    private TypeComposant typeComposant;
     private Double coutUnitaire;
     private Double quantite;
-    private TypeComposant typeComposant;
-    private Double tauxTVA;
     private Double coutTransport;
     private Double coefficientQualite;
 
-    public Matériaux(UUID id, String nom, Double coutUnitaire, Double quantite, TypeComposant typeComposant, Double tauxTVA, Double coutTransport, Double coefficientQualite) {
+    public Matériaux(String nom, Double tauxTVA, Integer id, TypeComposant typeComposant, Double coutUnitaire, Double quantite, Double coutTransport, Double coefficientQualite) {
+        super(nom, tauxTVA);
         this.id = id;
-        this.nom = nom;
+        this.typeComposant = typeComposant;
         this.coutUnitaire = coutUnitaire;
         this.quantite = quantite;
-        this.typeComposant = typeComposant;
-        this.tauxTVA = tauxTVA;
         this.coutTransport = coutTransport;
         this.coefficientQualite = coefficientQualite;
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
+    public TypeComposant getTypeComposant() {
+        return typeComposant;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setTypeComposant(TypeComposant typeComposant) {
+        this.typeComposant = typeComposant;
     }
 
     public Double getCoutUnitaire() {
@@ -55,22 +52,6 @@ public class Matériaux {
 
     public void setQuantite(Double quantite) {
         this.quantite = quantite;
-    }
-
-    public TypeComposant getTypeComposant() {
-        return typeComposant;
-    }
-
-    public void setTypeComposant(TypeComposant typeComposant) {
-        this.typeComposant = typeComposant;
-    }
-
-    public Double getTauxTVA() {
-        return tauxTVA;
-    }
-
-    public void setTauxTVA(Double tauxTVA) {
-        this.tauxTVA = tauxTVA;
     }
 
     public Double getCoutTransport() {
