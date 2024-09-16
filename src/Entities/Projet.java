@@ -9,6 +9,7 @@ public class Projet {
     private Double profit;
     private Double totalCost;
     private EtatProject projectStatus;
+    private Client client;
 
     public Projet(Integer id, String projectName, Double profit, Double totalCost, EtatProject projectStatus) {
         this.id = id;
@@ -16,6 +17,7 @@ public class Projet {
         this.profit = profit;
         this.totalCost = totalCost;
         this.projectStatus = projectStatus;
+        this.client = null;
     }
 
     public Integer getId() {
@@ -56,5 +58,13 @@ public class Projet {
 
     public void setProjectStatus(EtatProject projectStatus) {
         this.projectStatus = projectStatus;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
