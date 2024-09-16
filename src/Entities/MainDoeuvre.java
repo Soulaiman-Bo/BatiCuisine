@@ -3,14 +3,14 @@ package Entities;
 import Enums.TypeComposant;
 
 
-public class MainDœuvre extends Composants {
+public class MainDoeuvre extends Composants {
     private Integer id;
     private TypeComposant componentType;
     private Double hourlyRate;
     private Double workHoursCount;
     private Double productivityRate;
 
-    public MainDœuvre(String name, Double taxRate, Integer id, TypeComposant componentType, Double hourlyRate, Double workHoursCount, Double productivityRate) {
+    public MainDoeuvre(String name, Double taxRate, Integer id, TypeComposant componentType, Double hourlyRate, Double workHoursCount, Double productivityRate) {
         super(name, taxRate);
         this.id = id;
         this.componentType = componentType;
