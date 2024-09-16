@@ -3,7 +3,7 @@ package Entities;
 import Enums.TypeComposant;
 
 
-public class Matériaux extends Composants {
+public class Materiaux extends Composants {
     private Integer id;
     private TypeComposant typeComposant;
     private Double unitCost;
@@ -11,7 +11,7 @@ public class Matériaux extends Composants {
     private Double transportCost;
     private Double qualityCoefficient;
 
-    public Matériaux(String name, Double taxRate, Integer id, TypeComposant typeComposant, Double unitCost, Double quantity, Double transportCost, Double qualityCoefficient) {
+    public Materiaux(String name, Double taxRate, Integer id, TypeComposant typeComposant, Double unitCost, Double quantity, Double transportCost, Double qualityCoefficient) {
         super(name, taxRate);
         this.id = id;
         this.typeComposant = typeComposant;
