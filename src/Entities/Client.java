@@ -1,6 +1,7 @@
 package Entities;
 
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Client {
     private Integer id;
@@ -8,6 +9,7 @@ public class Client {
     private String address;
     private String phoneNumber;
     private Boolean isProfessional;
+    private List<Projet> projets;
 
     public Client(Integer id, String name, String address, String phoneNumber, Boolean isProfessional) {
         this.id = id;
@@ -15,6 +17,7 @@ public class Client {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.isProfessional = isProfessional;
+        this.projets = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -55,5 +58,13 @@ public class Client {
 
     public void setProfessional(Boolean professional) {
         isProfessional = professional;
+    }
+
+    public List<Projet> getProjets() {
+        return projets;
+    }
+
+    public void setProjets(List<Projet> projets) {
+        this.projets = projets;
     }
 }
