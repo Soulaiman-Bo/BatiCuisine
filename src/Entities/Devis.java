@@ -1,7 +1,6 @@
 package Entities;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public class Devis {
     private Integer id;
@@ -9,13 +8,15 @@ public class Devis {
     private LocalDate issueDate;
     private LocalDate validityDate;
     private Boolean accepted;
+    private Integer project_id;
 
-    public Devis(Integer id, Double estimatedPrice, LocalDate issueDate, LocalDate validityDate, Boolean accepted) {
+    public Devis(Integer id, Double estimatedPrice, LocalDate issueDate, LocalDate validityDate, Boolean accepted, Integer project) {
         this.id = id;
         this.estimatedPrice = estimatedPrice;
         this.issueDate = issueDate;
         this.validityDate = validityDate;
         this.accepted = accepted;
+        this.project_id = project;
     }
 
     public Integer getId() {
@@ -56,5 +57,13 @@ public class Devis {
 
     public void setAccepted(Boolean accepted) {
         this.accepted = accepted;
+    }
+
+    public Integer getProject_id() {
+        return project_id;
+    }
+
+    public void setProject_id(Integer project_id) {
+        this.project_id = project_id;
     }
 }
