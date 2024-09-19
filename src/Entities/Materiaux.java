@@ -5,16 +5,14 @@ import Enums.TypeComposant;
 
 public class Materiaux extends Composants {
     private Integer id;
-    private TypeComposant typeComposant;
     private Double unitCost;
     private Double quantity;
     private Double transportCost;
     private Double qualityCoefficient;
 
-    public Materiaux(String name, Double taxRate, Integer id, TypeComposant typeComposant, Double unitCost, Double quantity, Double transportCost, Double qualityCoefficient) {
-        super(name, taxRate);
+    public Materiaux(String name, Double taxRate, TypeComposant componentType, Integer id, Double unitCost, Double quantity, Double transportCost, Double qualityCoefficient) {
+        super(name, taxRate, componentType);
         this.id = id;
-        this.typeComposant = typeComposant;
         this.unitCost = unitCost;
         this.quantity = quantity;
         this.transportCost = transportCost;
@@ -27,14 +25,6 @@ public class Materiaux extends Composants {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public TypeComposant getTypeComposant() {
-        return typeComposant;
-    }
-
-    public void setTypeComposant(TypeComposant typeComposant) {
-        this.typeComposant = typeComposant;
     }
 
     public Double getUnitCost() {

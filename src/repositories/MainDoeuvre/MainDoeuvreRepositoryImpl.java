@@ -151,15 +151,14 @@ public class MainDoeuvreRepositoryImpl implements MainDoeuvreRepository {
             }
         }
 
-
     }
 
     private MainDoeuvre mapResultSetToMainDœuvre(ResultSet rs) throws SQLException {
         return new MainDoeuvre(
                 rs.getString("name"),
                 rs.getDouble("taxRate"),
-                rs.getInt("id"),
                 TypeComposant.MAINDOUVRE,
+                rs.getInt("id"),
                 rs.getDouble("hourlyRate"),
                 rs.getDouble("workHoursCount"),
                 rs.getDouble("productivityRate")
