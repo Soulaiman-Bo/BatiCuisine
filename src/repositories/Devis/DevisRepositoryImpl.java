@@ -3,6 +3,7 @@ package repositories.Devis;
 
 import Config.DBConnection;
 import Entities.Devis;
+import Entities.Projet;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class DevisRepositoryImpl implements DevisRepository {
                     stmt.setDate(2, Date.valueOf(devis.getIssueDate()));
                     stmt.setDate(3, Date.valueOf(devis.getValidityDate()));
                     stmt.setBoolean(4, devis.getAccepted());
-                    stmt.setInt(5, devis.getProject_id());
+                    stmt.setInt(5, devis.getProjet().getId());
 
                     if (devis.getId() != null) {
                         stmt.setInt(6, devis.getId());
@@ -181,12 +182,13 @@ public class DevisRepositoryImpl implements DevisRepository {
     }
 
     private Devis mapResultSetToDevis(ResultSet rs) throws SQLException {
+        Projet projet = new Projet();
         return new Devis(
                 rs.getInt("id"),
                 rs.getDouble("estimatedPrice"),
                 rs.getDate("issueDate").toLocalDate(),
                 rs.getDate("validityDate").toLocalDate(),
                 rs.getBoolean("accepted"),
-                rs.getInt("project_id"));
+                 projet);
     }
 }

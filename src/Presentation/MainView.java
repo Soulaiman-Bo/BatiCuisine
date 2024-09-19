@@ -5,6 +5,7 @@ import Entities.*;
 import Enums.EtatProject;
 import Enums.TypeComposant;
 import Services.ClientService;
+import Services.DevisService;
 import Services.ProjetService;
 import Utils.ConsolePrinter;
 import Utils.Types.CostBreakdown;
@@ -13,7 +14,10 @@ import repositories.Client.ClientRepositoryImpl;
 import repositories.Projet.ProjetRepository;
 import repositories.Projet.ProjetRepositoryImpl;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -116,6 +120,10 @@ public class MainView {
                 projetService.createProjetWithComponents(projet);
             }
 
+            DevisService devisService = new DevisService();
+            addDevisView(projet);
+
+
         }else {
             System.out.println("Client not found");
         }
@@ -163,6 +171,38 @@ public class MainView {
 
         return new MainDoeuvre(workerType, taxRate, TypeComposant.MAINDOUVRE, null,  hourlyRate, worKHoursCount, coefficient);
 
+    }
+
+    static private Devis addDevisView(Projet projet){
+        System.out.print(" ==> Do you want to Create Devis? [y/n]: ");
+        String devisChoice = scanner.nextLine();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String  issueDate = "";
+        String validity = "";
+
+
+        if(devisChoice.equals("y")){
+            System.out.print(" ==> Entre the issue date  [YYYY-MM-DD]: ");
+            issueDate = scanner.nextLine();
+            System.out.print(" ==> Valid Until [YYYY-MM-DD]: ");
+            validity = scanner.nextLine();
+        }
+
+        DevisService devisService = new DevisService();
+        Devis devis = new Devis(
+                null,
+                projet.getTotalCost(),
+                LocalDate.parse(issueDate, formatter),
+                LocalDate.parse(validity, formatter),
+                Boolean.FALSE,
+                projet
+        );
+
+        ConsolePrinter.printDevis(devis);
+        devisService.createDevis(devis);
+
+        return devis;
     }
 
     static private CostBreakdown calculateCost(List<Composants> composants) {
