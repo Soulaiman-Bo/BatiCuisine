@@ -48,7 +48,6 @@ public class MainView {
         ClientService clientService = new ClientService(clientRepository);
         Optional<Client> client =  clientService.getClientById(clientId);
 
-
         if(client.isPresent()){
             ConsolePrinter.printClient(client.get());
 
@@ -114,7 +113,7 @@ public class MainView {
             String saveChoice = scanner.nextLine();
 
             if(saveChoice.equals("y")){
-                projetService.createProjet(projet);
+                projetService.createProjetWithComponents(projet);
             }
 
         }else {

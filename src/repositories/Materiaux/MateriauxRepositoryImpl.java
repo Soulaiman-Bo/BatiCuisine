@@ -16,7 +16,7 @@ public class MateriauxRepositoryImpl implements MateriauxRepository {
     @Override
     public Materiaux save(Materiaux materiau) {
         String sql = materiau.getId() == null ?
-                "INSERT INTO Materiaux (name, taxRate, unitCost, quantity, transportCost, qualityCoefficient) VALUES (?, ?, ?, ?, ?, ?)" :
+                "INSERT INTO Materiaux (name, taxRate, unitCost, quantity, transportCost, qualityCoefficient, project_id) VALUES (?, ?, ?, ?, ?, ?, ?)" :
                 "UPDATE Materiaux SET name = ?, taxRate = ?, unitCost = ?, quantity = ?, transportCost = ?, qualityCoefficient = ? WHERE id = ?";
 
         try {
@@ -31,6 +31,8 @@ public class MateriauxRepositoryImpl implements MateriauxRepository {
                     stmt.setDouble(4, materiau.getQuantity());
                     stmt.setDouble(5, materiau.getTransportCost());
                     stmt.setDouble(6, materiau.getQualityCoefficient());
+                    stmt.setDouble(7, materiau.getProjet().getId());
+
 
                     if (materiau.getId() != null) {
                         stmt.setInt(7, materiau.getId());
@@ -51,6 +53,7 @@ public class MateriauxRepositoryImpl implements MateriauxRepository {
                             }
                         }
                     }
+
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } finally {
