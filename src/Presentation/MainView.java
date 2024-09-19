@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-
 public class MainView {
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -97,6 +96,26 @@ public class MainView {
                 }
             }
 
+            CostBreakdown  costBreakdown = calculateCost(projet.getComposants());
+
+            System.out.print(" ==> Do you want to apply a profit margin? [y/n]: ");
+            String marginChoice = scanner.nextLine();
+
+            if(marginChoice.equals("y")){
+                costBreakdown.setProfit(costBreakdown.getBaseCost() * (projet.getProfit() / 100));
+            }
+
+            projet.setTotalCost(costBreakdown.getTotalCost());
+            projet.setProjectStatus(EtatProject.INPROGRESS);
+
+            ConsolePrinter.printCostDetails(costBreakdown);
+
+            System.out.print(" ==> Do you want to save this project? [y/n]: ");
+            String saveChoice = scanner.nextLine();
+
+            if(saveChoice.equals("y")){
+                projetService.createProjet(projet);
+            }
 
         }else {
             System.out.println("Client not found");
@@ -145,6 +164,33 @@ public class MainView {
 
         return new MainDoeuvre(workerType, taxRate, TypeComposant.MAINDOUVRE, null,  hourlyRate, worKHoursCount, coefficient);
 
+    }
+
+    static private CostBreakdown calculateCost(List<Composants> composants) {
+        return composants.stream()
+                .map(composant -> {
+                    double baseCost = calculateBaseCost(composant);
+                    double taxAmount = baseCost * (composant.getTaxRate() / 100);
+                    return new CostBreakdown(baseCost, taxAmount);
+                })
+                .reduce(new CostBreakdown(0, 0), (subtotal, element) -> new CostBreakdown(
+                        subtotal.getBaseCost() + element.getBaseCost(),
+                        subtotal.getTaxAmount() + element.getTaxAmount()
+                ));
+    }
+
+    static private double calculateBaseCost(Composants composant) {
+        if (composant instanceof Materiaux materiaux) {
+            return materiaux.getUnitCost()
+                    * materiaux.getQuantity()
+                    * materiaux.getQualityCoefficient()
+                    + materiaux.getTransportCost();
+        } else if (composant instanceof MainDoeuvre mainDoeuvre) {
+            return mainDoeuvre.getHourlyRate()
+                    * mainDoeuvre.getWorkHoursCount()
+                    * mainDoeuvre.getProductivityRate();
+        }
+        return 0.0; // or throw an exception for unknown component types
     }
 
 }
