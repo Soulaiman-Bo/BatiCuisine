@@ -16,7 +16,7 @@ public class MainDoeuvreRepositoryImpl implements MainDoeuvreRepository {
     @Override
     public MainDoeuvre save(MainDoeuvre mainDoeuvre) {
         String sql = mainDoeuvre.getId() == null ?
-                "INSERT INTO MainDœuvre (name, taxRate, hourlyRate, workHoursCount, productivityRate) VALUES (?, ?, ?, ?, ?)" :
+                "INSERT INTO MainDœuvre (name, taxRate, hourlyRate, workHoursCount, productivityRate, project_id) VALUES (?, ?, ?, ?, ?, ?)" :
                 "UPDATE MainDœuvre SET name = ?, taxRate = ?, hourlyRate = ?, workHoursCount = ?, productivityRate = ? WHERE id = ?";
 
         try {
@@ -30,6 +30,7 @@ public class MainDoeuvreRepositoryImpl implements MainDoeuvreRepository {
                     stmt.setDouble(3, mainDoeuvre.getHourlyRate());
                     stmt.setDouble(4, mainDoeuvre.getWorkHoursCount());
                     stmt.setDouble(5, mainDoeuvre.getProductivityRate());
+                    stmt.setDouble(6, mainDoeuvre.getProjet().getId());
 
                     if (mainDoeuvre.getId() != null) {
                         stmt.setInt(6, mainDoeuvre.getId());

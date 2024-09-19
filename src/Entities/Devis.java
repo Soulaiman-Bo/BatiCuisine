@@ -8,15 +8,15 @@ public class Devis {
     private LocalDate issueDate;
     private LocalDate validityDate;
     private Boolean accepted;
-    private Integer project_id;
+    private Projet projet;
 
-    public Devis(Integer id, Double estimatedPrice, LocalDate issueDate, LocalDate validityDate, Boolean accepted, Integer project) {
+    public Devis(Integer id, Double estimatedPrice, LocalDate issueDate, LocalDate validityDate, Boolean accepted, Projet projet) {
         this.id = id;
         this.estimatedPrice = estimatedPrice;
         this.issueDate = issueDate;
         this.validityDate = validityDate;
         this.accepted = accepted;
-        this.project_id = project;
+        this.projet = projet;
     }
 
     public Integer getId() {
@@ -59,11 +59,11 @@ public class Devis {
         this.accepted = accepted;
     }
 
-    public Integer getProject_id() {
-        return project_id;
+    public Projet getProjet() {
+        return projet;
     }
 
-    public void setProject_id(Integer project_id) {
-        this.project_id = project_id;
+    public void setProjet(Projet projet) {
+        this.projet = projet;
     }
 }

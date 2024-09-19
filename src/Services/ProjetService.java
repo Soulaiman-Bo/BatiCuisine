@@ -1,5 +1,8 @@
 package Services;
 
+import Entities.Composants;
+import Entities.MainDoeuvre;
+import Entities.Materiaux;
 import Entities.Projet;
 import repositories.Projet.ProjetRepository;
 
@@ -16,6 +19,32 @@ public class ProjetService {
     public Projet createProjet(Projet projet) {
         return projetRepository.save(projet);
     }
+
+    public Projet createProjetWithComponents(Projet projet) {
+        Projet savedProjet = projetRepository.save(projet);
+
+        MateriauxService materiauxService =  new MateriauxService();
+        MainDœuvreService mainDœuvreService =  new MainDœuvreService();
+
+        List<Composants> composants =  projet.getComposants();
+
+        composants.forEach(composant -> {
+            if (composant instanceof Materiaux materiaux) {
+
+                composant.setProjet(savedProjet);
+                materiauxService.createMateriaux(materiaux);
+
+            } else if (composant instanceof MainDoeuvre mainDoeuvre) {
+
+                composant.setProjet(savedProjet);
+                mainDœuvreService.createMainDœuvre(mainDoeuvre);
+
+            }
+        });
+
+        return savedProjet;
+    }
+
 
     public Optional<Projet> getProjetById(Integer id) {
         return projetRepository.findById(id);

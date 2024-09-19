@@ -25,6 +25,10 @@ public class Projet {
         this.composants = new ArrayList<>();
     }
 
+    public Projet() {
+    }
+
+
     public Integer getId() {
         return id;
     }

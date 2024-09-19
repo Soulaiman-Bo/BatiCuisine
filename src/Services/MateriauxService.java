@@ -2,14 +2,16 @@ package Services;
 
 import Entities.Materiaux;
 import repositories.Materiaux.MateriauxRepository;
+import repositories.Materiaux.MateriauxRepositoryImpl;
+
 import java.util.List;
 import java.util.Optional;
 
 public class MateriauxService {
     private final MateriauxRepository materiauxRepository;
 
-    public MateriauxService(MateriauxRepository materiauxRepository) {
-        this.materiauxRepository = materiauxRepository;
+    public MateriauxService() {
+        this.materiauxRepository = new MateriauxRepositoryImpl();
     }
 
     public Materiaux createMateriaux(Materiaux materiaux) {

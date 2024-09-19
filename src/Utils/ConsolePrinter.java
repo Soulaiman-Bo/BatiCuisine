@@ -1,6 +1,8 @@
 package Utils;
 
 import Entities.Client;
+import Entities.Devis;
+import Entities.Projet;
 import Utils.Types.CostBreakdown;
 
 public class ConsolePrinter {
@@ -67,6 +69,22 @@ public class ConsolePrinter {
         System.out.println(" +----------------------------------------+");
         System.out.println(resetText + "\n" );
 
+    }
+
+    public static void  printDevis(Devis devis){
+        String redText = "\033[0;33m";
+        String resetText = "\033[0m";
+        System.out.println("\n" + redText);
+        System.out.println(" +----------------------------------------+");
+        System.out.println(" |                  Devis                 |");
+        System.out.println(" +----------------------------------------+");
+        System.out.println(" | Client's Name     | " + devis.getProjet().getClient().getName());
+        System.out.println(" | Project's Name    | " + devis.getProjet().getProjectName());
+        System.out.println(" | Project's Cost    | " + devis.getProjet().getTotalCost());
+        System.out.println(" | Devis is Accepted | "  + devis.getAccepted());
+        System.out.println(" | Valid Until       | "  + devis.getValidityDate().toString());
+        System.out.println(" +----------------------------------------+");
+        System.out.println(resetText + "\n" );
     }
 
     public static void printSuccess(String message){
