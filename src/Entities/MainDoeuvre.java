@@ -17,8 +17,6 @@ public class MainDoeuvre extends Composants {
         this.productivityRate = productivityRate;
     }
 
-
-
     public Integer getId() {
         return id;
     }

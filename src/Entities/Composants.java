@@ -6,6 +6,7 @@ public class Composants {
     private String name;
     private Double taxRate;
     private TypeComposant componentType;
+    private Projet projet;
 
     public Composants(String name, Double taxRate, TypeComposant componentType) {
         this.name = name;
@@ -36,5 +37,13 @@ public class Composants {
 
     public void setComponentType(TypeComposant componentType) {
         this.componentType = componentType;
+    }
+
+    public Projet getProjet() {
+        return projet;
+    }
+
+    public void setProjet(Projet projet) {
+        this.projet = projet;
     }
 }

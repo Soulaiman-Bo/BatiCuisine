@@ -2,6 +2,7 @@ package Services;
 
 import Entities.MainDoeuvre;
 import repositories.MainDoeuvre.MainDoeuvreRepository;
+import repositories.MainDoeuvre.MainDoeuvreRepositoryImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,8 +10,8 @@ import java.util.Optional;
 public class MainDœuvreService {
     private final MainDoeuvreRepository mainDoeuvreRepository;
 
-    public MainDœuvreService(MainDoeuvreRepository mainDoeuvreRepository) {
-        this.mainDoeuvreRepository = mainDoeuvreRepository;
+    public MainDœuvreService() {
+        this.mainDoeuvreRepository = new MainDoeuvreRepositoryImpl();
     }
 
     public MainDoeuvre createMainDœuvre(MainDoeuvre mainDoeuvre) {
