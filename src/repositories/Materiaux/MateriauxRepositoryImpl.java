@@ -159,8 +159,8 @@ public class MateriauxRepositoryImpl implements MateriauxRepository {
         return new Materiaux(
                 rs.getString("name"),
                 rs.getDouble("taxRate"),
-                rs.getInt("id"),
                 TypeComposant.MATERIEL,
+                rs.getInt("id"),
                 rs.getDouble("unitCost"),
                 rs.getDouble("quantity"),
                 rs.getDouble("transportCost"),
