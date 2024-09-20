@@ -16,7 +16,7 @@ import java.util.Optional;
         @Override
         public Projet save(Projet projet) {
             String sql = projet.getId() == null ?
-                    "INSERT INTO Projets (projectName, profit, totalCost, status, client_id) VALUES (?, ?, ?, ?::projectstatus, ?)" :
+                    "INSERT INTO Projets (projectName, profit, totalCost, status, client_id, discount) VALUES (?, ?, ?, ?::projectstatus, ?, ?)" :
                     "UPDATE Projets SET projectName = ?, profit = ?, totalCost = ?, status = ?, client_id = ? WHERE id = ?";
 
             try {
@@ -30,6 +30,7 @@ import java.util.Optional;
                         stmt.setDouble(3, projet.getTotalCost());
                         stmt.setString(4, projet.getProjectStatus().name());
                         stmt.setInt(5, projet.getClient().getId());
+                        stmt.setDouble(6, projet.getDiscount());
 
                         if (projet.getId() != null) {
                             stmt.setInt(6, projet.getId());
