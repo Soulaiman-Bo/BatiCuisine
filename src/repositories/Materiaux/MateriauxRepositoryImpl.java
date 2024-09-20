@@ -3,6 +3,7 @@ package repositories.Materiaux;
 import Config.DBConnection;
 import Entities.Materiaux;
 import Enums.TypeComposant;
+import Utils.Mappers;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class MateriauxRepositoryImpl implements MateriauxRepository {
                     pstmt.setInt(1, id);
                     ResultSet rs = pstmt.executeQuery();
                     if (rs.next()) {
-                        return Optional.of(mapResultSetToMateriaux(rs));
+                        return Optional.of(Mappers.mapResultSetToMateriaux(rs));
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -112,7 +113,7 @@ public class MateriauxRepositoryImpl implements MateriauxRepository {
                 try (Statement stmt = connection.createStatement();
                      ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
-                        materiauxList.add(mapResultSetToMateriaux(rs));
+                        materiauxList.add(Mappers.mapResultSetToMateriaux(rs));
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -158,17 +159,5 @@ public class MateriauxRepositoryImpl implements MateriauxRepository {
 
     }
 
-    private Materiaux mapResultSetToMateriaux(ResultSet rs) throws SQLException {
-        return new Materiaux(
-                rs.getString("name"),
-                rs.getDouble("taxRate"),
-                TypeComposant.MATERIEL,
-                rs.getInt("id"),
-                rs.getDouble("unitCost"),
-                rs.getDouble("quantity"),
-                rs.getDouble("transportCost"),
-                rs.getDouble("qualityCoefficient")
-        );
-    }
 }
 

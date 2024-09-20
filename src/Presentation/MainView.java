@@ -16,10 +16,8 @@ import repositories.Projet.ProjetRepositoryImpl;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class MainView {
     private static final Scanner scanner = new Scanner(System.in);
@@ -130,6 +128,58 @@ public class MainView {
 
     }
 
+    static public void acceptDevis(){
+        System.out.print(" ==> Entre Client's ID: ");
+        Integer clientId = scanner.nextInt();
+        scanner.nextLine();
+
+        ClientRepository clientRepository = new ClientRepositoryImpl();
+        ClientService clientService = new ClientService(clientRepository);
+        Optional<Client> client =  clientService.getClientById(clientId);
+
+        if(client.isPresent()){
+            ConsolePrinter.printClient(client.get());
+
+            DevisService devisService = new DevisService();
+            List<Devis> devisList = devisService.getDevisWithProject(client.get());
+
+            for(Devis devis : devisList){
+                ConsolePrinter.printDevis(devis);
+            }
+
+            System.out.print(" ==> Do you want to accept a devis? [y/n]: ");
+            String saveChoice = scanner.nextLine();
+
+            if(saveChoice.equals("y")){
+                System.out.print(" ==> Enter Devis ID [To Accept]: ");
+                Integer devisId = scanner.nextInt();
+                scanner.nextLine();
+
+                Devis currentdevis = devisList.stream()
+                        .filter(devis -> Objects.equals(devis.getId(), devisId))
+                        .findFirst()
+                        .orElse(null);
+
+                assert currentdevis != null;
+                if(!currentdevis.getAccepted()){
+                    try {
+                        Devis returnedDevis = devisService.acceptDevis(currentdevis);
+                        ConsolePrinter.printSuccess("Devis Accepted Successfully: ID " + returnedDevis.getId());
+                    } catch (Exception e){
+                        ConsolePrinter.printError(e.getMessage());
+                    }
+
+                }else {
+                    ConsolePrinter.printError("Devis Already Accepted");
+                }
+            }
+
+        }else {
+            System.out.println("Client not found");
+        }
+
+    }
+
     static private Materiaux addMaterialsView(){
         System.out.print(" ==> Entre the name of the Material: ");
         String materialName = scanner.nextLine();
@@ -173,7 +223,7 @@ public class MainView {
 
     }
 
-    static private Devis addDevisView(Projet projet){
+    static private void addDevisView(Projet projet){
         System.out.print(" ==> Do you want to Create Devis? [y/n]: ");
         String devisChoice = scanner.nextLine();
 
@@ -202,7 +252,6 @@ public class MainView {
         ConsolePrinter.printDevis(devis);
         devisService.createDevis(devis);
 
-        return devis;
     }
 
     static private CostBreakdown calculateCost(List<Composants> composants) {

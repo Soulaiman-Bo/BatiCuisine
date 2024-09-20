@@ -1,16 +1,19 @@
 package Services;
 
+import Entities.Client;
 import Entities.Devis;
 import repositories.Devis.DevisRepository;
 import repositories.Devis.DevisRepositoryImpl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 public class DevisService {
     private final DevisRepository devisRepository;
 
-    public DevisService() {
+    public
+    DevisService() {
         this.devisRepository = new DevisRepositoryImpl();
     }
 
@@ -34,7 +37,20 @@ public class DevisService {
         devisRepository.deleteById(id);
     }
 
-    public List<Devis> getDevisByProjectId(Integer projectId) {
-        return devisRepository.findByProjectId(projectId);
+    public List<Devis> getDevisWithProject(Client client) {
+        return devisRepository.findDevisJoinProjectsById(client);
+    }
+
+    public Devis acceptDevis(Devis devis) throws Exception {
+        Devis newdevis  = new Devis();
+        boolean isPast = devis.getValidityDate().isAfter(LocalDate.now());
+
+         if(isPast) {
+             newdevis.setAccepted(true);
+             newdevis.setId(devis.getId());
+             return devisRepository.update(newdevis);
+         } else {
+             throw new Exception("Invalid Date");
+         }
     }
 }

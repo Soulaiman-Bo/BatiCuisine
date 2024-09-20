@@ -1,5 +1,6 @@
 package repositories.Devis;
 
+import Entities.Client;
 import Entities.Devis;
 
 import java.util.List;
@@ -10,5 +11,6 @@ public interface DevisRepository {
     Optional<Devis> findById(Integer id);
     List<Devis> findAll();
     void deleteById(Integer id);
-    List<Devis> findByProjectId(Integer projectId);
+    List<Devis> findDevisJoinProjectsById(Client client);
+    Devis update(Devis devis);
 }
