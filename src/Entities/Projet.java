@@ -11,15 +11,17 @@ public class Projet {
     private String projectName;
     private Double profit;
     private Double totalCost;
+    private  Double discount;
     private EtatProject projectStatus;
     private Client client;
     List<Composants> composants;
 
-    public Projet(Integer id, String projectName, Double profit, Double totalCost, EtatProject projectStatus) {
+    public Projet(Integer id, String projectName, Double profit, Double totalCost, Double discount, EtatProject projectStatus) {
         this.id = id;
         this.projectName = projectName;
         this.profit = profit;
         this.totalCost = totalCost;
+        this.discount = discount;
         this.projectStatus = projectStatus;
         this.client = null;
         this.composants = new ArrayList<>();
@@ -85,5 +87,11 @@ public class Projet {
         this.composants = composants;
     }
 
+    public Double getDiscount() {
+        return discount;
+    }
 
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
 }

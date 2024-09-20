@@ -62,7 +62,7 @@ public class MainView {
             ProjetRepository projetRepository = new ProjetRepositoryImpl();
             ProjetService projetService = new ProjetService(projetRepository);
 
-            Projet projet = new Projet(null, projectName, profit, null, null);
+            Projet projet = new Projet(null, projectName, profit, null,null, null);
             projet.setClient(client.get());
 
             materialsLoop:
@@ -106,8 +106,24 @@ public class MainView {
                 costBreakdown.setProfit(costBreakdown.getBaseCost() * (projet.getProfit() / 100));
             }
 
+            System.out.print(" ==> Do you want to apply a Discount to This Client? [y/n]: ");
+            String discountChoice = scanner.nextLine();
+
+            if(discountChoice.equals("y")){
+                System.out.print(" ==> Entre Discount percentage (%): ");
+                Double discount = scanner.nextDouble();
+                scanner.nextLine();
+
+                projet.setDiscount(discount);
+            }else {
+                projet.setDiscount(0.0);
+            }
+
+            costBreakdown.setDiscount(costBreakdown.getProfit() * (projet.getDiscount() / 100));
+
             projet.setTotalCost(costBreakdown.getTotalCost());
             projet.setProjectStatus(EtatProject.INPROGRESS);
+
 
             ConsolePrinter.printCostDetails(costBreakdown);
 
