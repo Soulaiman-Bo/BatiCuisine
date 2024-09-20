@@ -72,6 +72,7 @@ public class ConsolePrinter {
         System.out.println(" | Base Cost       | " + costBreakdown.getBaseCost());
         System.out.println(" | Tax Amount      | "  + costBreakdown.getTaxAmount());
         System.out.println(" | Profit Amount   | "  + costBreakdown.getProfit());
+        System.out.println(" | Discount Amount | "  + costBreakdown.getDiscount());
         System.out.println(" +----------------------------------------+");
         System.out.println(" | Total Cost      | "  + costBreakdown.getTotalCost());
         System.out.println(" +----------------------------------------+");

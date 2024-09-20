@@ -15,6 +15,7 @@ public class Mappers {
                 rs.getString("projectName"),
                 rs.getDouble("profit"),
                 rs.getDouble("totalCost"),
+                rs.getDouble("discount"),
                 EtatProject.valueOf(rs.getString("status"))
         );
     }
