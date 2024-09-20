@@ -19,15 +19,20 @@ public class Main {
                     MainView.createProject();
                     break;
                 case 2:
-                    MainView.createClient();
+                   //
                     break;
                 case 3:
-                    System.exit(0);
-                    break;
-                case 4:
                     //
                     break;
-
+                case 4:
+                    MainView.createClient();
+                    break;
+                case 5:
+                    MainView.acceptDevis();
+                    break;
+                case 6:
+                    System.exit(0);
+                    break;
                 default:
                     ConsolePrinter.printError("Invalid choice. Please try again.");
             }
