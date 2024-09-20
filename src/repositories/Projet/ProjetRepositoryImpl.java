@@ -1,9 +1,8 @@
 package repositories.Projet;
 
 import Config.DBConnection;
-import Entities.Client;
 import Entities.Projet;
-import Enums.EtatProject;
+import Utils.Mappers;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -75,7 +74,7 @@ import java.util.Optional;
                         stmt.setInt(1, id);
                         ResultSet rs = stmt.executeQuery();
                         if (rs.next()) {
-                            return Optional.of(mapResultSetToProjet(rs));
+                            return Optional.of(Mappers.mapResultSetToProjet(rs));
                         }
                     }
                 }
@@ -102,7 +101,7 @@ import java.util.Optional;
                     try (Statement stmt = connection.createStatement();
                          ResultSet rs = stmt.executeQuery(sql)) {
                         while (rs.next()) {
-                            projetList.add(mapResultSetToProjet(rs));
+                            projetList.add(Mappers.mapResultSetToProjet(rs));
                         }
                     }
                 }
@@ -139,13 +138,4 @@ import java.util.Optional;
             }
         }
 
-        private Projet mapResultSetToProjet(ResultSet rs) throws SQLException {
-            return new Projet(
-                    rs.getInt("id"),
-                    rs.getString("projectName"),
-                    rs.getDouble("profit"),
-                    rs.getDouble("totalCost"),
-                    EtatProject.valueOf(rs.getString("status"))
-            );
-        }
 }

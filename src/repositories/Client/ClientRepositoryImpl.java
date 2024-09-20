@@ -2,6 +2,7 @@ package repositories.Client;
 
 import Config.DBConnection;
 import Entities.Client;
+import Utils.Mappers;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class ClientRepositoryImpl implements ClientRepository {
                     stmt.setInt(1, id);
                     ResultSet rs = stmt.executeQuery();
                     if (rs.next()) {
-                        return Optional.of(mapResultSetToClient(rs));
+                        return Optional.of(Mappers.mapResultSetToClient(rs));
                     }
                 }
             }
@@ -101,7 +102,7 @@ public class ClientRepositoryImpl implements ClientRepository {
                 try (Statement stmt = connection.createStatement();
                      ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
-                        clientList.add(mapResultSetToClient(rs));
+                        clientList.add(Mappers.mapResultSetToClient(rs));
                     }
                 }
             }
@@ -152,7 +153,7 @@ public class ClientRepositoryImpl implements ClientRepository {
                     stmt.setBoolean(1, isProfessional);
                     ResultSet rs = stmt.executeQuery();
                     while (rs.next()) {
-                        clientList.add(mapResultSetToClient(rs));
+                        clientList.add(Mappers.mapResultSetToClient(rs));
                     }
                 }
             }
@@ -166,13 +167,4 @@ public class ClientRepositoryImpl implements ClientRepository {
         return clientList;
     }
 
-    private Client mapResultSetToClient(ResultSet rs) throws SQLException {
-        return new Client(
-                rs.getInt("id"),
-                rs.getString("name"),
-                rs.getString("address"),
-                rs.getString("phoneNumber"),
-                rs.getBoolean("isProfessional")
-        );
-    }
 }

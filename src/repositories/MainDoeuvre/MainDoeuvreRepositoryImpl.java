@@ -3,6 +3,7 @@ package repositories.MainDoeuvre;
 import Config.DBConnection;
 import Entities.MainDoeuvre;
 import Enums.TypeComposant;
+import Utils.Mappers;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -80,7 +81,7 @@ public class MainDoeuvreRepositoryImpl implements MainDoeuvreRepository {
                     pstmt.setInt(1, id);
                     ResultSet rs = pstmt.executeQuery();
                     if (rs.next()) {
-                        return Optional.of(mapResultSetToMainDœuvre(rs));
+                        return Optional.of(Mappers.mapResultSetToMainDœuvre(rs));
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -111,7 +112,7 @@ public class MainDoeuvreRepositoryImpl implements MainDoeuvreRepository {
                 try (Statement stmt = connection.createStatement();
                      ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
-                        mainDoeuvreList.add(mapResultSetToMainDœuvre(rs));
+                        mainDoeuvreList.add(Mappers.mapResultSetToMainDœuvre(rs));
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -154,15 +155,5 @@ public class MainDoeuvreRepositoryImpl implements MainDoeuvreRepository {
 
     }
 
-    private MainDoeuvre mapResultSetToMainDœuvre(ResultSet rs) throws SQLException {
-        return new MainDoeuvre(
-                rs.getString("name"),
-                rs.getDouble("taxRate"),
-                TypeComposant.MAINDOUVRE,
-                rs.getInt("id"),
-                rs.getDouble("hourlyRate"),
-                rs.getDouble("workHoursCount"),
-                rs.getDouble("productivityRate")
-        );
-    }
+
 }
