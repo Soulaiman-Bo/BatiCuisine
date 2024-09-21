@@ -1,6 +1,6 @@
 package Services;
 
-import Entities.Client;
+import Domain.Entities.Client;
 import repositories.Client.ClientRepository;
 
 import java.util.List;

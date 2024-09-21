@@ -1,6 +1,6 @@
-package Entities;
+package Domain.Entities;
 
-import Enums.TypeComposant;
+import Domain.Enums.TypeComposant;
 
 
 public class Materiaux extends Composants {

@@ -1,6 +1,6 @@
 package repositories.Materiaux;
 
-import Entities.Materiaux;
+import Domain.Entities.Materiaux;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,4 +10,5 @@ public interface MateriauxRepository {
     Optional<Materiaux> findById(Integer id);
     List<Materiaux> findAll();
     void deleteById(Integer id);
+    List<Materiaux> findByProjectId(Integer projectId);
 }

@@ -1,6 +1,6 @@
-package Entities;
+package Domain.Entities;
 
-import Enums.EtatProject;
+import Domain.Enums.EtatProject;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package repositories.Projet;
 
 import Config.DBConnection;
-import Entities.Projet;
+import Domain.Entities.Projet;
 import Utils.Mappers;
 
 import java.sql.*;
