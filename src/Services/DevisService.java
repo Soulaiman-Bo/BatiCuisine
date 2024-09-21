@@ -1,7 +1,7 @@
 package Services;
 
-import Entities.Client;
-import Entities.Devis;
+import Domain.Entities.Client;
+import Domain.Entities.Devis;
 import repositories.Devis.DevisRepository;
 import repositories.Devis.DevisRepositoryImpl;
 

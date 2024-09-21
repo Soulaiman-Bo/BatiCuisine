@@ -1,27 +1,39 @@
 package Utils;
 
-import Entities.Client;
-import Entities.Devis;
-import Entities.Projet;
+import Domain.Entities.*;
+import Presentation.ProjectView;
 import Utils.Types.CostBreakdown;
 
 public class ConsolePrinter {
 
     public static void mainMenu(){
+        System.out.println("\u001B[31m");
         System.out.println(" +----------------------------------------+");
         System.out.println(" |           professionnel Menu           |");
         System.out.println(" +----------------------------------------+");
         System.out.println(" |  1. Create a new project               |");
-        System.out.println(" |  2. Add Components to a Project        |");
         System.out.println(" |  3. Get Details of a Project           |");
+        System.out.print("\u001B[0m");
+        System.out.print("\u001B[32m");
         System.out.println(" +----------------------------------------+");
         System.out.println(" |               Client Menu              |");
         System.out.println(" +----------------------------------------+");
-        System.out.println(" |  4. Add a Client                       |");
+        System.out.println(" |  4. Register a Client                  |");
         System.out.println(" |  5. Accept/Refuse Devis                |");
+        System.out.print("\u001B[0m");
+        System.out.print("\u001B[33m");
+        System.out.println(" +----------------------------------------+");
+        System.out.println(" |            Additional Menu             |");
+        System.out.println(" +----------------------------------------+");
+        System.out.println(" |  6. Devis Management                   |");
+        System.out.println(" |  6. Project Management                 |");
+        System.out.println(" |  6. Client Management                  |");
+        System.out.print("\u001B[0m");
+        System.out.print("\u001B[36m");
         System.out.println(" +----------------------------------------+");
         System.out.println(" |  6. Exit                               |");
         System.out.println(" +----------------------------------------+");
+        System.out.print("\u001B[0m");
         System.out.print(" ==> Enter your choice: ");
     }
 
@@ -75,6 +87,44 @@ public class ConsolePrinter {
         System.out.println(" | Discount Amount | "  + costBreakdown.getDiscount());
         System.out.println(" +----------------------------------------+");
         System.out.println(" | Total Cost      | "  + costBreakdown.getTotalCost());
+        System.out.println(" +----------------------------------------+");
+        System.out.println(resetText);
+
+    }
+
+    public static void printProjectDetails(Projet projet){
+        String redText = "\033[0;31m";
+        String resetText = "\033[0m";
+        System.out.println(redText);
+        System.out.println(" +----------------------------------------+");
+        System.out.println(" |                 Project                |");
+        System.out.println(" +----------------------------------------+");
+        System.out.println(" | Project Name       | " + projet.getProjectName());
+        System.out.println(" | Project Status     | " + projet.getProjectStatus().toString());
+
+        if(!projet.getComposants().isEmpty()){
+
+            System.out.println(" +----------------------------------------+");
+            System.out.println(" |              Materiaux                 |");
+            System.out.println(" +----------------------------------------+");
+            projet.getComposants().stream().filter(composants -> composants instanceof Materiaux).forEach(composants -> {
+                double baseCost = ProjectView.calculateBaseCost(composants);
+                double taxAmount = baseCost * (composants.getTaxRate() / 100);
+                CostBreakdown costBreakdown = new CostBreakdown(baseCost, taxAmount);
+                System.out.println(" | "  + composants.getName() + "       | "  + costBreakdown.getTotalCost() );
+            });
+
+            System.out.println(" +----------------------------------------+");
+            System.out.println(" |              MainDoeuvre               |");
+            System.out.println(" +----------------------------------------+");
+            projet.getComposants().stream().filter(composants -> composants instanceof MainDoeuvre).forEach(composants -> {
+                double baseCost = ProjectView.calculateBaseCost(composants);
+                double taxAmount = baseCost * (composants.getTaxRate() / 100);
+                CostBreakdown costBreakdown = new CostBreakdown(baseCost, taxAmount);
+                System.out.println(" | "  + composants.getName() + "       | "  + costBreakdown.getTotalCost());
+            });
+
+        }
         System.out.println(" +----------------------------------------+");
         System.out.println(resetText);
 

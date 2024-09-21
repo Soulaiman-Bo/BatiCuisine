@@ -1,7 +1,7 @@
 package repositories.Devis;
 
-import Entities.Client;
-import Entities.Devis;
+import Domain.Entities.Client;
+import Domain.Entities.Devis;
 
 import java.util.List;
 import java.util.Optional;

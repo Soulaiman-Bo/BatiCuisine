@@ -1,8 +1,8 @@
 package repositories.MainDoeuvre;
 
 import Config.DBConnection;
-import Entities.MainDoeuvre;
-import Enums.TypeComposant;
+import Domain.Entities.MainDoeuvre;
+import Domain.Entities.Materiaux;
 import Utils.Mappers;
 
 import java.sql.*;
@@ -155,5 +155,34 @@ public class MainDoeuvreRepositoryImpl implements MainDoeuvreRepository {
 
     }
 
+    public List<MainDoeuvre> findByProjectId(Integer projectId) {
+        List<MainDoeuvre> mainDoeuvreList = new ArrayList<>();
+        String sql = "SELECT * FROM MainDœuvre WHERE project_id = ?";
+
+        try {
+            dbConnection = DBConnection.getInstance();
+            if (dbConnection != null) {
+                connection = dbConnection.getConnection();
+
+                try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                    pstmt.setInt(1, projectId);
+                    ResultSet rs = pstmt.executeQuery();
+                    while (rs.next()) {
+                        mainDoeuvreList.add(Mappers.mapResultSetToMainDœuvre(rs));
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (dbConnection != null) {
+                dbConnection.closeConnection();
+            }
+        }
+
+        return mainDoeuvreList;
+    }
 
 }

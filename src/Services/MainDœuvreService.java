@@ -1,6 +1,7 @@
 package Services;
 
-import Entities.MainDoeuvre;
+import Domain.Entities.MainDoeuvre;
+import Domain.Entities.Materiaux;
 import repositories.MainDoeuvre.MainDoeuvreRepository;
 import repositories.MainDoeuvre.MainDoeuvreRepositoryImpl;
 
@@ -20,6 +21,10 @@ public class MainDœuvreService {
 
     public Optional<MainDoeuvre> getMainDœuvreById(Integer id) {
         return mainDoeuvreRepository.findById(id);
+    }
+
+    public List<MainDoeuvre> getMainDœuvreByProjectId(Integer id) {
+        return mainDoeuvreRepository.findByProjectId(id);
     }
 
     public List<MainDoeuvre> getAllMainDœuvre() {

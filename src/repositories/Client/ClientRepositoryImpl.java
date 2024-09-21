@@ -1,7 +1,7 @@
 package repositories.Client;
 
 import Config.DBConnection;
-import Entities.Client;
+import Domain.Entities.Client;
 import Utils.Mappers;
 
 import java.sql.*;

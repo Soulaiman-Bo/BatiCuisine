@@ -1,6 +1,6 @@
 package repositories.Projet;
 
-import Entities.Projet;
+import Domain.Entities.Projet;
 
 import java.util.List;
 import java.util.Optional;

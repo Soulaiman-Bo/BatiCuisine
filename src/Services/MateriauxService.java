@@ -1,6 +1,6 @@
 package Services;
 
-import Entities.Materiaux;
+import Domain.Entities.Materiaux;
 import repositories.Materiaux.MateriauxRepository;
 import repositories.Materiaux.MateriauxRepositoryImpl;
 
@@ -24,6 +24,10 @@ public class MateriauxService {
 
     public List<Materiaux> getAllMateriaux() {
         return materiauxRepository.findAll();
+    }
+
+    public List<Materiaux> getMateriauxByProjectId(Integer id) {
+        return materiauxRepository.findByProjectId(id);
     }
 
     public Materiaux updateMateriaux(Materiaux materiaux) {

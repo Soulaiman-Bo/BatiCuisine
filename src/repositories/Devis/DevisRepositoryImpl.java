@@ -2,12 +2,9 @@ package repositories.Devis;
 
 
 import Config.DBConnection;
-import Entities.Client;
-import Entities.Devis;
-import Entities.Projet;
-import Enums.EtatProject;
+import Domain.Entities.Client;
+import Domain.Entities.Devis;
 import Utils.Mappers;
-import repositories.Projet.ProjetRepositoryImpl;
 
 import java.sql.*;
 import java.util.ArrayList;
