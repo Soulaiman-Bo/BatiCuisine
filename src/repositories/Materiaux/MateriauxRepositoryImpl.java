@@ -1,8 +1,7 @@
 package repositories.Materiaux;
 
 import Config.DBConnection;
-import Entities.Materiaux;
-import Enums.TypeComposant;
+import Domain.Entities.Materiaux;
 import Utils.Mappers;
 
 import java.sql.*;
@@ -157,6 +156,37 @@ public class MateriauxRepositoryImpl implements MateriauxRepository {
         }
 
 
+    }
+
+    @Override
+    public List<Materiaux> findByProjectId(Integer projectId) {
+        List<Materiaux> materiauxList = new ArrayList<>();
+        String sql = "SELECT * FROM Materiaux WHERE project_id = ?";
+
+        try {
+            dbConnection = DBConnection.getInstance();
+            if (dbConnection != null) {
+                connection = dbConnection.getConnection();
+
+                try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                    pstmt.setInt(1, projectId);
+                    ResultSet rs = pstmt.executeQuery();
+                    while (rs.next()) {
+                        materiauxList.add(Mappers.mapResultSetToMateriaux(rs));
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (dbConnection != null) {
+                dbConnection.closeConnection();
+            }
+        }
+
+        return materiauxList;
     }
 
 }

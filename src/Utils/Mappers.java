@@ -1,8 +1,8 @@
 package Utils;
 
-import Entities.*;
-import Enums.EtatProject;
-import Enums.TypeComposant;
+import Domain.Entities.*;
+import Domain.Enums.EtatProject;
+import Domain.Enums.TypeComposant;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

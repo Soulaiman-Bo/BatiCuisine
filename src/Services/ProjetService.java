@@ -1,10 +1,11 @@
 package Services;
 
-import Entities.Composants;
-import Entities.MainDoeuvre;
-import Entities.Materiaux;
-import Entities.Projet;
+import Domain.Entities.Composants;
+import Domain.Entities.MainDoeuvre;
+import Domain.Entities.Materiaux;
+import Domain.Entities.Projet;
 import repositories.Projet.ProjetRepository;
+import repositories.Projet.ProjetRepositoryImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,8 +13,8 @@ import java.util.Optional;
 public class ProjetService {
     private final ProjetRepository projetRepository;
 
-    public ProjetService(ProjetRepository projetRepository) {
-        this.projetRepository = projetRepository;
+    public ProjetService() {
+        this.projetRepository = new ProjetRepositoryImpl();
     }
 
     public Projet createProjet(Projet projet) {
@@ -45,6 +46,22 @@ public class ProjetService {
         return savedProjet;
     }
 
+    public Projet getProjetWithComponents(Integer projectId) {
+        Optional<Projet> project = projetRepository.findById(projectId);
+
+        if(project.isPresent()) {
+            MateriauxService materiauxService =  new MateriauxService();
+            MainDœuvreService mainDœuvreService =  new MainDœuvreService();
+
+            List<Materiaux>  materiauxList = materiauxService.getMateriauxByProjectId(projectId);
+            List<MainDoeuvre>  mainDoeuvreList = mainDœuvreService.getMainDœuvreByProjectId(projectId);
+
+            project.get().getComposants().addAll(materiauxList);
+            project.get().getComposants().addAll(mainDoeuvreList);
+        }
+
+        return project.orElse(null);
+    }
 
     public Optional<Projet> getProjetById(Integer id) {
         return projetRepository.findById(id);
