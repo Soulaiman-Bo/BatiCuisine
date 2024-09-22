@@ -34,15 +34,21 @@ public class MainView {
                     ProjectView.getDetailsOfProject();
                     break;
                 case 3:
-                    //
-                    break;
-                case 4:
                     ClientView.createClient();
                     break;
-                case 5:
+                case 4:
                     ClientView.acceptDevis();
                     break;
+                case 5:
+                    DevisView.devisMain();
+                    break;
                 case 6:
+                    ProjectView.projectMain();
+                    break;
+                case 7:
+                    ClientView.clientMain();
+                    break;
+                case 8:
                     System.exit(0);
                     break;
                 default:

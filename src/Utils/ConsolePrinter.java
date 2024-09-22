@@ -12,26 +12,26 @@ public class ConsolePrinter {
         System.out.println(" |           professionnel Menu           |");
         System.out.println(" +----------------------------------------+");
         System.out.println(" |  1. Create a new project               |");
-        System.out.println(" |  3. Get Details of a Project           |");
+        System.out.println(" |  2. Get Details of a Project           |");
         System.out.print("\u001B[0m");
         System.out.print("\u001B[32m");
         System.out.println(" +----------------------------------------+");
         System.out.println(" |               Client Menu              |");
         System.out.println(" +----------------------------------------+");
-        System.out.println(" |  4. Register a Client                  |");
-        System.out.println(" |  5. Accept/Refuse Devis                |");
+        System.out.println(" |  3. Register a Client                  |");
+        System.out.println(" |  4. Accept/Refuse Devis                |");
         System.out.print("\u001B[0m");
         System.out.print("\u001B[33m");
         System.out.println(" +----------------------------------------+");
         System.out.println(" |            Additional Menu             |");
         System.out.println(" +----------------------------------------+");
-        System.out.println(" |  6. Devis Management                   |");
+        System.out.println(" |  5. Devis Management                   |");
         System.out.println(" |  6. Project Management                 |");
-        System.out.println(" |  6. Client Management                  |");
+        System.out.println(" |  7. Client Management                  |");
         System.out.print("\u001B[0m");
         System.out.print("\u001B[36m");
         System.out.println(" +----------------------------------------+");
-        System.out.println(" |  6. Exit                               |");
+        System.out.println(" |  8. Exit                               |");
         System.out.println(" +----------------------------------------+");
         System.out.print("\u001B[0m");
         System.out.print(" ==> Enter your choice: ");
@@ -41,9 +41,37 @@ public class ConsolePrinter {
         System.out.println(" +----------------------------------------+");
         System.out.println(" |               Client Menu              |");
         System.out.println(" +----------------------------------------+");
-        System.out.println(" |  1. Search for an existing Client    |");
-        System.out.println(" |  2. Add a new Client                 |");
+        System.out.println(" |  1. Get All Clients                    |");
+        System.out.println(" |  2. Get Client By Id                   |");
+        System.out.println(" |  2. Delete Client                      |");
+        System.out.println(" |  3. Update Client                      |");
         System.out.println(" |  4. Exit                               |");
+        System.out.println(" +----------------------------------------+");
+        System.out.print(" ==> Enter your choice: ");
+    }
+
+    public static void devisMenu(){
+        System.out.println(" +----------------------------------------+");
+        System.out.println(" |               Devis Menu               |");
+        System.out.println(" +----------------------------------------+");
+        System.out.println(" |  1. Get All Devis                      |");
+        System.out.println(" |  2. Get Devis By Id                    |");
+        System.out.println(" |  3. Delete Devis                       |");
+        System.out.println(" |  4. Update Devis                       |");
+        System.out.println(" |  5. Exit                               |");
+        System.out.println(" +----------------------------------------+");
+        System.out.print(" ==> Enter your choice: ");
+    }
+
+    public static void projectMenu(){
+        System.out.println(" +----------------------------------------+");
+        System.out.println(" |             Project Menu               |");
+        System.out.println(" +----------------------------------------+");
+        System.out.println(" |  1. Get All Projects                   |");
+        System.out.println(" |  2. Get Project By Id                  |");
+        System.out.println(" |  3. Delete Project                     |");
+        System.out.println(" |  4. Update Project                     |");
+        System.out.println(" |  5. Exit                               |");
         System.out.println(" +----------------------------------------+");
         System.out.print(" ==> Enter your choice: ");
     }
@@ -143,6 +171,8 @@ public class ConsolePrinter {
         }
         if (devis.getProjet().getId() != null){
             System.out.println(" | Project's ID      | " + devis.getProjet().getId());
+        }
+        if (devis.getProjet().getProjectName() != null){
             System.out.println(" | Project's Name    | " + devis.getProjet().getProjectName());
         }
         System.out.println(" | Project's Cost    | " + devis.getEstimatedPrice());

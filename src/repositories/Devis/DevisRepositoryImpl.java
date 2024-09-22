@@ -126,8 +126,10 @@ public class DevisRepositoryImpl implements DevisRepository {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public boolean deleteById(Integer id) {
         String sql = "DELETE FROM Devis WHERE id = ?";
+        boolean isDeleted = false;
+
         try {
             dbConnection = DBConnection.getInstance();
             if (dbConnection != null) {
@@ -135,7 +137,10 @@ public class DevisRepositoryImpl implements DevisRepository {
 
                 try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
                     pstmt.setInt(1, id);
-                    pstmt.executeUpdate();
+                    int affectedRows = pstmt.executeUpdate();
+                    if (affectedRows > 0) {
+                        isDeleted = true;
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -148,9 +153,10 @@ public class DevisRepositoryImpl implements DevisRepository {
             }
         }
 
+        return isDeleted;
     }
 
-   @Override
+    @Override
     public List<Devis> findDevisJoinProjectsById(Client client) {
         List<Devis> devisList = new ArrayList<>();
         String sql = "Select * FROM Devis d JOIN projets p ON d.project_id = p.id WHERE p.client_id = ?";
@@ -262,7 +268,5 @@ public class DevisRepositoryImpl implements DevisRepository {
 
         return devis;
     }
-
-
 
 }
