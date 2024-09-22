@@ -32,7 +32,7 @@ public class DevisView {
                     deleteDevis();
                     break;
                 case 4:
-                    //
+                    updateDevis();
                     break;
                 case 5:
                     break devisLoop;
@@ -101,6 +101,52 @@ public class DevisView {
             ConsolePrinter.printError("Failed to Delete");
         }
 
+    }
+
+    static public void updateDevis() {
+        System.out.print(" ==> Enter the ID of Devis You want to Update: ");
+        int devisID = scanner.nextInt();
+        scanner.nextLine();
+
+        DevisService devisService = new DevisService();
+        Optional<Devis> devis = devisService.getDevisById(devisID);
+
+        if (devis.isEmpty()) {
+            ConsolePrinter.printError("Devis not found with ID: " + devisID);
+            return;
+        }
+
+        System.out.println("Current Devis details:");
+        ConsolePrinter.printDevis(devis.get());
+
+        System.out.println("\nEnter new values for the fields you want to update (press Enter to skip):");
+
+        System.out.print("Issue Date (current: " + devis.get().getIssueDate() + ") (yyyy-MM-dd): ");
+        String issueDateInput = scanner.nextLine();
+        if (!issueDateInput.isEmpty()) {
+            devis.get().setIssueDate(LocalDate.parse(issueDateInput));
+        }
+
+        System.out.print("Validity Date (current: " + devis.get().getValidityDate() + ") (yyyy-MM-dd): ");
+        String validityDateInput = scanner.nextLine();
+        if (!validityDateInput.isEmpty()) {
+            devis.get().setValidityDate(LocalDate.parse(validityDateInput));
+        }
+
+        System.out.print("Accepted (current: " + devis.get().getAccepted() + ") (true/false): ");
+        String acceptedInput = scanner.nextLine();
+        if (!acceptedInput.isEmpty()) {
+            devis.get().setAccepted(Boolean.parseBoolean(acceptedInput));
+        }
+
+        Devis updatedDevis = devisService.updateDevis(devis.get());
+
+        if (updatedDevis != null) {
+            ConsolePrinter.printSuccess("Devis updated successfully");
+            ConsolePrinter.printDevis(updatedDevis);
+        } else {
+            ConsolePrinter.printError("Failed to update Devis");
+        }
     }
 
 
