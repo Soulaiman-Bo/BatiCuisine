@@ -9,8 +9,6 @@ import Utils.ConsolePrinter;
 import Utils.Types.CostBreakdown;
 import repositories.Client.ClientRepository;
 import repositories.Client.ClientRepositoryImpl;
-import repositories.Projet.ProjetRepository;
-import repositories.Projet.ProjetRepositoryImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +30,7 @@ public class ProjectView {
                     break;
                 case 2:
                     // Get Project By Id
+                    getProjectById();
                     break;
                 case 3:
                     // Delete Project
@@ -171,6 +170,17 @@ public class ProjectView {
         projetList.forEach(ConsolePrinter::printProjectDetails);
 
     }
+
+    static public void getProjectById(){
+        System.out.print(" ==> Entre the ID of Project: ");
+        int projectID = scanner.nextInt();
+
+        ProjetService projetService = new ProjetService();
+        Optional<Projet> projetList =  projetService.getProjetById(projectID);
+        projetList.ifPresentOrElse(ConsolePrinter::printProjectDetails, () -> ConsolePrinter.printError("Project not found."));
+    }
+
+
 
     static private CostBreakdown calculateCost(List<Composants> composants) {
         return composants.stream()

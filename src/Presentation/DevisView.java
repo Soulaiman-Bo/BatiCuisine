@@ -150,8 +150,4 @@ public class DevisView {
     }
 
 
-
-
-
-
 }
