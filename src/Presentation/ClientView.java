@@ -18,6 +18,36 @@ public class ClientView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
+    static public void clientMain(){
+        while (true) {
+            ConsolePrinter.clientMenu();
+            int clientChoice = scanner.nextInt();
+
+            switch (clientChoice) {
+                case 1:
+                    //
+                    break;
+                case 2:
+                    //
+                    break;
+                case 3:
+                    //
+                    break;
+                case 4:
+                    //
+                    break;
+                case 5:
+                    //
+                    break;
+                case 6:
+                    System.exit(0);
+                    break;
+                default:
+                    ConsolePrinter.printError("Invalid choice. Please try again.");
+            }
+        }
+    }
+
     static public void createClient(){
         System.out.print(" ==> Entre FullName: ");
         String name = scanner.nextLine();

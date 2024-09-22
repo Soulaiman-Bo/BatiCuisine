@@ -19,6 +19,36 @@ import java.util.Scanner;
 public class ProjectView {
     private static final Scanner scanner = new Scanner(System.in);
 
+    static public void projectMain(){
+        while (true) {
+            ConsolePrinter.projectMenu();
+            int projectChoice = scanner.nextInt();
+
+            projectLoop:
+            switch (projectChoice) {
+                case 1:
+                    //
+                    break;
+                case 2:
+                    //
+                    break;
+                case 3:
+                    //
+                    break;
+                case 4:
+                    //
+                    break;
+                case 5:
+                    //
+                    break;
+                case 6:
+                    break projectLoop;
+                default:
+                    ConsolePrinter.printError("Invalid choice. Please try again.");
+            }
+        }
+    }
+
     static public void createProject(){
         System.out.print(" ==> Entre Client's ID: ");
         Integer clientId = scanner.nextInt();
