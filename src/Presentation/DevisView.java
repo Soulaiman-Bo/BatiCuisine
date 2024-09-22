@@ -26,7 +26,7 @@ public class DevisView {
                     getAllDevis();
                     break;
                 case 2:
-                    //
+                    getDevisByID();
                     break;
                 case 3:
                     //
@@ -78,5 +78,16 @@ public class DevisView {
         List<Devis> devisList =  devisService.getAllDevis();
         devisList.forEach(ConsolePrinter::printDevis);
     }
+
+    static public void  getDevisByID(){
+        System.out.print(" ==> Entre the ID of Devis: ");
+        int devisID = scanner.nextInt();
+
+        DevisService devisService = new DevisService();
+        Optional<Devis> devisList =  devisService.getDevisById(devisID);
+        devisList.ifPresentOrElse(ConsolePrinter::printDevis, () -> ConsolePrinter.printError("Devis not found."));
+    }
+
+
 
 }
