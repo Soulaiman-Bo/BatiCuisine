@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class Mappers {
 
     static public Projet mapResultSetToProjet(ResultSet rs) throws SQLException {
-        return new Projet(
+        Projet projet = new Projet(
                 rs.getInt("id"),
                 rs.getString("projectName"),
                 rs.getDouble("profit"),
@@ -18,6 +18,8 @@ public class Mappers {
                 rs.getDouble("discount"),
                 EtatProject.valueOf(rs.getString("status"))
         );
+        projet.getClient().setId(rs.getInt("client_id"));
+        return projet;
     }
 
     static public Devis mapResultSetToDevis(ResultSet rs) throws SQLException {

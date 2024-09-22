@@ -11,7 +11,7 @@ public class Projet {
     private String projectName;
     private Double profit;
     private Double totalCost;
-    private  Double discount;
+    private Double discount;
     private EtatProject projectStatus;
     private Client client;
     List<Composants> composants;
@@ -23,7 +23,7 @@ public class Projet {
         this.totalCost = totalCost;
         this.discount = discount;
         this.projectStatus = projectStatus;
-        this.client = null;
+        this.client = new Client();
         this.composants = new ArrayList<>();
     }
 

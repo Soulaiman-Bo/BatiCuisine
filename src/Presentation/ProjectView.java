@@ -20,28 +20,26 @@ public class ProjectView {
     private static final Scanner scanner = new Scanner(System.in);
 
     static public void projectMain(){
+        projectLoop:
         while (true) {
             ConsolePrinter.projectMenu();
             int projectChoice = scanner.nextInt();
 
-            projectLoop:
             switch (projectChoice) {
                 case 1:
-                    //
+                    // Get All Projects
+                    getAllProjects();
                     break;
                 case 2:
-                    //
+                    // Get Project By Id
                     break;
                 case 3:
-                    //
+                    // Delete Project
                     break;
                 case 4:
-                    //
+                    // Update Project
                     break;
                 case 5:
-                    //
-                    break;
-                case 6:
                     break projectLoop;
                 default:
                     ConsolePrinter.printError("Invalid choice. Please try again.");
@@ -165,6 +163,13 @@ public class ProjectView {
         Projet project = projectService.getProjetWithComponents(projectId);
 
         ConsolePrinter.printProjectDetails(project);
+    }
+
+    static public void getAllProjects() {
+        ProjetService projetService = new ProjetService();
+        List<Projet> projetList =  projetService.getAllProjets();
+        projetList.forEach(ConsolePrinter::printProjectDetails);
+
     }
 
     static private CostBreakdown calculateCost(List<Composants> composants) {
