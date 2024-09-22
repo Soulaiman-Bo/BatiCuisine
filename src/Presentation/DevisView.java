@@ -29,7 +29,7 @@ public class DevisView {
                     getDevisByID();
                     break;
                 case 3:
-                    //
+                    deleteDevis();
                     break;
                 case 4:
                     //
@@ -87,6 +87,24 @@ public class DevisView {
         Optional<Devis> devisList =  devisService.getDevisById(devisID);
         devisList.ifPresentOrElse(ConsolePrinter::printDevis, () -> ConsolePrinter.printError("Devis not found."));
     }
+
+    static public void   deleteDevis(){
+        System.out.print(" ==> Entre the ID of Devis To Delete: ");
+        int devisID = scanner.nextInt();
+
+        DevisService devisService = new DevisService();
+        boolean isDeleted =  devisService.deleteDevis(devisID);
+
+        if (isDeleted) {
+            ConsolePrinter.printSuccess("Deleted Successfully");
+        } else {
+            ConsolePrinter.printError("Failed to Delete");
+        }
+
+    }
+
+
+
 
 
 
