@@ -34,9 +34,11 @@ public class ProjectView {
                     break;
                 case 3:
                     // Delete Project
+                    deleteProject();
                     break;
                 case 4:
                     // Update Project
+                    updateProject();
                     break;
                 case 5:
                     break projectLoop;
@@ -180,7 +182,84 @@ public class ProjectView {
         projetList.ifPresentOrElse(ConsolePrinter::printProjectDetails, () -> ConsolePrinter.printError("Project not found."));
     }
 
+    static public void deleteProject(){
+        System.out.print(" ==> Entre the ID of Project To Delete: ");
+        int projectID = scanner.nextInt();
 
+        ProjetService projetService = new ProjetService();
+        boolean isDeleted =  projetService.deleteProjet(projectID);
+
+        if (isDeleted) {
+            ConsolePrinter.printSuccess("Deleted Successfully");
+        } else {
+            ConsolePrinter.printError("Failed to Delete");
+        }
+    }
+
+    static public void updateProject() {
+        System.out.print(" ==> Enter the ID of Project you want to Update: ");
+        int projectID = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        ProjetService projectService = new ProjetService();
+        Optional<Projet> project = projectService.getProjetById(projectID);
+
+        if (project.isEmpty()) {
+            ConsolePrinter.printError("Project not found with ID: " + projectID);
+            return;
+        }
+
+        System.out.println("Current Project details:");
+        ConsolePrinter.printProjectDetails(project.get());
+
+        System.out.println("\nEnter new values for the fields you want to update (press Enter to skip):");
+
+        System.out.print("Project Name (current: " + project.get().getProjectName() + "): ");
+        String projectNameInput = scanner.nextLine();
+        if (!projectNameInput.isEmpty()) {
+            project.get().setProjectName(projectNameInput);
+        }
+
+        System.out.print("Profit (current: " + project.get().getProfit() + "): ");
+        String profitInput = scanner.nextLine();
+        if (!profitInput.isEmpty()) {
+            project.get().setProfit(Double.parseDouble(profitInput));
+        }
+
+        System.out.print("Total Cost (current: " + project.get().getTotalCost() + "): ");
+        String totalCostInput = scanner.nextLine();
+        if (!totalCostInput.isEmpty()) {
+            project.get().setTotalCost(Double.parseDouble(totalCostInput));
+        }
+
+        System.out.print("Discount (current: " + project.get().getDiscount() + "): ");
+        String discountInput = scanner.nextLine();
+        if (!discountInput.isEmpty()) {
+            project.get().setDiscount(Double.parseDouble(discountInput));
+        }
+
+        System.out.print("Project Status (current: " + project.get().getProjectStatus() + ") (PENDING, INPROGRESS, FINISHED, CANCELLED): ");
+        String statusInput = scanner.nextLine();
+        if (!statusInput.isEmpty()) {
+            project.get().setProjectStatus(EtatProject.valueOf(statusInput.toUpperCase()));
+        }
+
+        System.out.print("Client ID (current: " + (project.get().getClient() != null ? project.get().getClient().getId() : "null") + "): ");
+        String clientIdInput = scanner.nextLine();
+        if (!clientIdInput.isEmpty()) {
+            Client client = new Client();
+            client.setId(Integer.parseInt(clientIdInput));
+            project.get().setClient(client);
+        }
+
+        Projet updatedProject = projectService.updateProjet(project.get());
+
+        if (updatedProject != null) {
+            ConsolePrinter.printSuccess("Project updated successfully");
+        } else {
+            ConsolePrinter.printError("Failed to update Project");
+        }
+    }
 
     static private CostBreakdown calculateCost(List<Composants> composants) {
         return composants.stream()
@@ -208,6 +287,5 @@ public class ProjectView {
         }
         return 0.0; // or throw an exception for unknown component types
     }
-
 
 }

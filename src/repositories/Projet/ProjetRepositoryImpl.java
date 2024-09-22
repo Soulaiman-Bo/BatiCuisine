@@ -2,6 +2,7 @@ package repositories.Projet;
 
 import Config.DBConnection;
 import Domain.Entities.Projet;
+import Utils.ConsolePrinter;
 import Utils.Mappers;
 
 import java.sql.*;
@@ -117,8 +118,9 @@ import java.util.Optional;
         }
 
         @Override
-        public void deleteById(Integer id) {
+        public boolean deleteById(Integer id) {
             String sql = "DELETE FROM Projets WHERE id = ?";
+            boolean isDeleted = false;  // Flag to track if deletion was successful
 
             try {
                 dbConnection = DBConnection.getInstance();
@@ -127,7 +129,10 @@ import java.util.Optional;
 
                     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
                         stmt.setInt(1, id);
-                        stmt.executeUpdate();
+                        int affectedRows = stmt.executeUpdate();  // Check the number of affected rows
+                        if (affectedRows > 0) {
+                            isDeleted = true;  // Set to true if at least one row was deleted
+                        }
                     }
                 }
             } catch (SQLException e) {
@@ -137,6 +142,98 @@ import java.util.Optional;
                     dbConnection.closeConnection();
                 }
             }
+
+            return isDeleted;  // Return true if a row was deleted, otherwise false
         }
 
-}
+        @Override
+        public Projet update(Projet projet) {
+
+            if (projet.getId() == null) {
+                throw new IllegalArgumentException("Cannot update a Project without an ID");
+            }
+
+            StringBuilder sql = new StringBuilder("UPDATE projets SET ");
+            List<Object> params = new ArrayList<>();
+            boolean needComma = false;
+
+            if (projet.getProjectName() != null) {
+                sql.append("projectname = ?");
+                params.add(projet.getProjectName());
+                needComma = true;
+            }
+            if (projet.getProfit() != null) {
+                if (needComma) sql.append(", ");
+                sql.append("profit = ?");
+                params.add(projet.getProfit());
+                needComma = true;
+            }
+            if (projet.getTotalCost() != null) {
+                if (needComma) sql.append(", ");
+                sql.append("totalcost = ?");
+                params.add(projet.getTotalCost());
+                needComma = true;
+            }
+            if (projet.getDiscount() != null) {
+                if (needComma) sql.append(", ");
+                sql.append("discount = ?");
+                params.add(projet.getDiscount());
+                needComma = true;
+            }
+
+            if (projet.getProjectStatus() != null) {
+                if (needComma) sql.append(", ");
+                sql.append("status = ?::projectstatus");
+                params.add(projet.getProjectStatus().name());
+                needComma = true;
+            }
+
+            if (projet.getClient() != null && projet.getClient().getId() != null) {
+                if (needComma) sql.append(", ");
+                sql.append("client_id = ?");
+                params.add(projet.getClient().getId());
+            }
+
+            sql.append(" WHERE id = ?");
+            params.add(projet.getId());
+
+            sql.append(" RETURNING *");
+
+
+            try {
+                dbConnection = DBConnection.getInstance();
+                if (dbConnection != null) {
+                    connection = dbConnection.getConnection();
+
+                    try (PreparedStatement stmt = connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS)) {
+                        for (int i = 0; i < params.size(); i++) {
+                            stmt.setObject(i + 1, params.get(i));
+                        }
+
+                        int affectedRows = stmt.executeUpdate();
+
+                        if (affectedRows == 0) {
+                            throw new SQLException("Updating project failed, no rows affected.");
+                        }
+
+                        try (ResultSet rs = stmt.getGeneratedKeys()) {
+                            if (rs.next()) {
+                                projet = Mappers.mapResultSetToProjet(rs);
+                            } else {
+                                throw new SQLException("Updating project failed, no rows returned.");
+                            }
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (dbConnection != null) {
+                    dbConnection.closeConnection();
+                }
+            }
+
+            return projet;
+        }
+
+    }

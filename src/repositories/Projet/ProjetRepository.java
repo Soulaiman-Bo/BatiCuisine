@@ -1,5 +1,6 @@
 package repositories.Projet;
 
+import Domain.Entities.Devis;
 import Domain.Entities.Projet;
 
 import java.util.List;
@@ -9,5 +10,6 @@ public interface ProjetRepository {
     Projet save(Projet projet);
     Optional<Projet> findById(Integer id);
     List<Projet> findAll();
-    void deleteById(Integer id);
+    boolean deleteById(Integer id);
+    Projet update(Projet projet);
 }

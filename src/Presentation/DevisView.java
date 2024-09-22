@@ -88,7 +88,7 @@ public class DevisView {
         devisList.ifPresentOrElse(ConsolePrinter::printDevis, () -> ConsolePrinter.printError("Devis not found."));
     }
 
-    static public void   deleteDevis(){
+    static public void  deleteDevis(){
         System.out.print(" ==> Entre the ID of Devis To Delete: ");
         int devisID = scanner.nextInt();
 
@@ -148,6 +148,5 @@ public class DevisView {
             ConsolePrinter.printError("Failed to update Devis");
         }
     }
-
 
 }

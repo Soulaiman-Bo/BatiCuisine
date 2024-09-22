@@ -127,6 +127,7 @@ public class ConsolePrinter {
         System.out.println(" +----------------------------------------+");
         System.out.println(" |                 Project                |");
         System.out.println(" +----------------------------------------+");
+        System.out.println(" | Project ID         | " + projet.getId());
         System.out.println(" | Project Name       | " + projet.getProjectName());
         System.out.println(" | Project Status     | " + projet.getProjectStatus().toString());
         System.out.println(" | Project Cost       | " + projet.getTotalCost().toString());
@@ -193,3 +194,4 @@ public class ConsolePrinter {
         System.out.println("--------------------------------------" + resetText  );
     }
 }
+
