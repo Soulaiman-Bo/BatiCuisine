@@ -22,6 +22,7 @@ public class Mappers {
 
     static public Devis mapResultSetToDevis(ResultSet rs) throws SQLException {
         Projet projet = new Projet();
+        projet.setId(rs.getInt("project_id"));
         return new Devis(
                 rs.getInt("id"),
                 rs.getDouble("estimatedPrice"),
