@@ -33,8 +33,8 @@ public class DevisService {
         return devisRepository.save(devis);
     }
 
-    public void deleteDevis(Integer id) {
-        devisRepository.deleteById(id);
+    public boolean deleteDevis(Integer id) {
+        return devisRepository.deleteById(id);
     }
 
     public List<Devis> getDevisWithProject(Client client) {

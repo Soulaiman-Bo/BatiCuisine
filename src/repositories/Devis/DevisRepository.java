@@ -10,7 +10,7 @@ public interface DevisRepository {
     Devis save(Devis devis);
     Optional<Devis> findById(Integer id);
     List<Devis> findAll();
-    void deleteById(Integer id);
+    boolean deleteById(Integer id);
     List<Devis> findDevisJoinProjectsById(Client client);
     Devis update(Devis devis);
 }
