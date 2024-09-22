@@ -72,10 +72,12 @@ public class ProjetService {
     }
 
     public Projet updateProjet(Projet projet) {
-        return projetRepository.save(projet);
+        return projetRepository.update(projet);
     }
 
-    public void deleteProjet(Integer id) {
-        projetRepository.deleteById(id);
+    public boolean deleteProjet(Integer id) {
+        return projetRepository.deleteById(id);
     }
+
+
 }

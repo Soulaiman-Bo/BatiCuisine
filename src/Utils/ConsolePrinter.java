@@ -127,8 +127,12 @@ public class ConsolePrinter {
         System.out.println(" +----------------------------------------+");
         System.out.println(" |                 Project                |");
         System.out.println(" +----------------------------------------+");
+        System.out.println(" | Project ID         | " + projet.getId());
         System.out.println(" | Project Name       | " + projet.getProjectName());
         System.out.println(" | Project Status     | " + projet.getProjectStatus().toString());
+        System.out.println(" | Project Cost       | " + projet.getTotalCost().toString());
+        System.out.println(" | Client ID          | " + projet.getClient().getId());
+
 
         if(!projet.getComposants().isEmpty()){
 
@@ -190,3 +194,4 @@ public class ConsolePrinter {
         System.out.println("--------------------------------------" + resetText  );
     }
 }
+
