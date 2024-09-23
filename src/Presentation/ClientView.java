@@ -1,11 +1,12 @@
 package Presentation;
 
-import Domain.Entities.Client;
-import Domain.Entities.Devis;
-import Domain.Entities.Materiaux;
+import Domain.Entities.*;
+import Domain.Enums.EtatProject;
 import Services.ClientService;
 import Services.DevisService;
+import Services.ProjetService;
 import Utils.ConsolePrinter;
+import Utils.Types.CostBreakdown;
 import repositories.Client.ClientRepository;
 import repositories.Client.ClientRepositoryImpl;
 
@@ -19,29 +20,27 @@ public class ClientView {
     private static final Scanner scanner = new Scanner(System.in);
 
     static public void clientMain(){
+        clientLoop:
         while (true) {
             ConsolePrinter.clientMenu();
             int clientChoice = scanner.nextInt();
 
             switch (clientChoice) {
                 case 1:
-                    //
+                    // Get All Clients
+                    getAllClients();
                     break;
                 case 2:
-                    //
+                    // Get Client By Id
                     break;
                 case 3:
-                    //
+                    // Delete Client
                     break;
                 case 4:
-                    //
+                    // Update Client
                     break;
                 case 5:
-                    //
-                    break;
-                case 6:
-                    System.exit(0);
-                    break;
+                    break clientLoop;
                 default:
                     ConsolePrinter.printError("Invalid choice. Please try again.");
             }
@@ -118,5 +117,14 @@ public class ClientView {
         }
 
     }
+
+    static public void getAllClients(){
+        ClientRepository clientRepository = new ClientRepositoryImpl();
+        ClientService clientService = new ClientService(clientRepository);
+        List<Client> clientList =  clientService.getAllClients();
+        clientList.forEach(ConsolePrinter::printClient);
+    }
+
+
 
 }
