@@ -250,5 +250,4 @@ public class ClientRepositoryImpl implements ClientRepository {
         return client;
     }
 
-
 }
