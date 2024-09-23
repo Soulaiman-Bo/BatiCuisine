@@ -120,7 +120,7 @@ import java.util.Optional;
         @Override
         public boolean deleteById(Integer id) {
             String sql = "DELETE FROM Projets WHERE id = ?";
-            boolean isDeleted = false;  // Flag to track if deletion was successful
+            boolean isDeleted = false;
 
             try {
                 dbConnection = DBConnection.getInstance();
@@ -129,9 +129,9 @@ import java.util.Optional;
 
                     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
                         stmt.setInt(1, id);
-                        int affectedRows = stmt.executeUpdate();  // Check the number of affected rows
+                        int affectedRows = stmt.executeUpdate();
                         if (affectedRows > 0) {
-                            isDeleted = true;  // Set to true if at least one row was deleted
+                            isDeleted = true;
                         }
                     }
                 }
@@ -143,7 +143,7 @@ import java.util.Optional;
                 }
             }
 
-            return isDeleted;  // Return true if a row was deleted, otherwise false
+            return isDeleted;
         }
 
         @Override

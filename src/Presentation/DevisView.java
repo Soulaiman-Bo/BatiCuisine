@@ -4,6 +4,7 @@ import Domain.Entities.Devis;
 import Domain.Entities.Projet;
 import Services.DevisService;
 import Utils.ConsolePrinter;
+import Utils.InputValidator;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,13 +14,14 @@ import java.util.Scanner;
 
 public class DevisView {
     private static final Scanner scanner = new Scanner(System.in);
+    private static final InputValidator validator = new InputValidator();
+
 
     static public void devisMain(){
         devisLoop:
         while (true) {
             ConsolePrinter.devisMenu();
-            int devisChoice = scanner.nextInt();
-
+            int devisChoice = validator.validateInteger("");
 
             switch (devisChoice) {
                 case 1:
@@ -44,26 +46,23 @@ public class DevisView {
 
     static public void addDevisView(Projet projet){
         System.out.print(" ==> Do you want to Create Devis? [y/n]: ");
-        String devisChoice = scanner.nextLine();
+        String devisChoice = validator.validateYesNo(" ==> Do you want to Create Devis?");
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String  issueDate = "";
-        String validity = "";
-
+        LocalDate  issueDate = null;
+        LocalDate validity = null;
 
         if(devisChoice.equals("y")){
-            System.out.print(" ==> Entre the issue date  [YYYY-MM-DD]: ");
-            issueDate = scanner.nextLine();
-            System.out.print(" ==> Valid Until [YYYY-MM-DD]: ");
-            validity = scanner.nextLine();
+            issueDate = validator.validateLocalDate(" ==> Entre the issue date  [YYYY-MM-DD]: ");
+            validity = validator.validateLocalDate(" ==> Valid Until [YYYY-MM-DD]: ");
         }
 
         DevisService devisService = new DevisService();
         Devis devis = new Devis(
                 null,
                 projet.getTotalCost(),
-                LocalDate.parse(issueDate, formatter),
-                LocalDate.parse(validity, formatter),
+                issueDate,
+                validity,
                 Boolean.FALSE,
                 projet
         );
@@ -80,8 +79,7 @@ public class DevisView {
     }
 
     static public void  getDevisByID(){
-        System.out.print(" ==> Entre the ID of Devis: ");
-        int devisID = scanner.nextInt();
+        int devisID = validator.validateInteger(" ==> Entre the ID of Devis: ");
 
         DevisService devisService = new DevisService();
         Optional<Devis> devisList =  devisService.getDevisById(devisID);
@@ -89,8 +87,7 @@ public class DevisView {
     }
 
     static public void  deleteDevis(){
-        System.out.print(" ==> Entre the ID of Devis To Delete: ");
-        int devisID = scanner.nextInt();
+        int devisID = validator.validateInteger(" ==> Entre the ID of Devis To Delete: ");
 
         DevisService devisService = new DevisService();
         boolean isDeleted =  devisService.deleteDevis(devisID);
@@ -104,9 +101,7 @@ public class DevisView {
     }
 
     static public void updateDevis() {
-        System.out.print(" ==> Enter the ID of Devis You want to Update: ");
-        int devisID = scanner.nextInt();
-        scanner.nextLine();
+        int devisID = validator.validateInteger(" ==> Enter the ID of Devis You want to Update: ");
 
         DevisService devisService = new DevisService();
         Optional<Devis> devis = devisService.getDevisById(devisID);
