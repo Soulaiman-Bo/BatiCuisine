@@ -11,8 +11,8 @@ import java.util.Optional;
 public class MainDœuvreService {
     private final MainDoeuvreRepository mainDoeuvreRepository;
 
-    public MainDœuvreService() {
-        this.mainDoeuvreRepository = new MainDoeuvreRepositoryImpl();
+    public MainDœuvreService(MainDoeuvreRepository mainDoeuvreRepository) {
+        this.mainDoeuvreRepository = mainDoeuvreRepository;
     }
 
     public MainDoeuvre createMainDœuvre(MainDoeuvre mainDoeuvre) {

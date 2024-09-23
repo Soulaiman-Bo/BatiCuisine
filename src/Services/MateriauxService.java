@@ -10,8 +10,8 @@ import java.util.Optional;
 public class MateriauxService {
     private final MateriauxRepository materiauxRepository;
 
-    public MateriauxService() {
-        this.materiauxRepository = new MateriauxRepositoryImpl();
+    public MateriauxService(MateriauxRepository materiauxRepository) {
+        this.materiauxRepository = materiauxRepository;
     }
 
     public Materiaux createMateriaux(Materiaux materiaux) {

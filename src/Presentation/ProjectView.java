@@ -3,27 +3,39 @@ package Presentation;
 import Domain.Entities.*;
 import Domain.Enums.EtatProject;
 import Services.ClientService;
-import Services.DevisService;
 import Services.ProjetService;
 import Utils.ConsolePrinter;
 import Utils.InputValidator;
 import Utils.Types.CostBreakdown;
-import repositories.Client.ClientRepository;
-import repositories.Client.ClientRepositoryImpl;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
 public class ProjectView {
-    private static final Scanner scanner = new Scanner(System.in);
-    private static final InputValidator validator = new InputValidator();
 
+    Scanner scanner;
+    InputValidator validator;
+    ConsolePrinter printer;
+    ClientService clientService;
+    ProjetService projetService;
+    ComponentsView componentsView;
+    DevisView devisView;
 
-    static public void projectMain(){
+    public ProjectView(Scanner scanner, InputValidator validator, ConsolePrinter printer, ClientService clientService, ProjetService projetService, ComponentsView componentsView, DevisView devisView) {
+        this.scanner = scanner;
+        this.validator = validator;
+        this.printer = printer;
+        this.clientService = clientService;
+        this.projetService = projetService;
+        this.componentsView = componentsView;
+        this.devisView = devisView;
+    }
+
+    public void projectMain() {
         projectLoop:
         while (true) {
-            ConsolePrinter.projectMenu();
+            printer.projectMenu();
             int projectChoice = validator.validateInteger("");
 
             switch (projectChoice) {
@@ -42,59 +54,54 @@ public class ProjectView {
                 case 5:
                     break projectLoop;
                 default:
-                    ConsolePrinter.printError("Invalid choice. Please try again.");
+                    printer.printError("Invalid choice. Please try again.");
             }
         }
     }
 
-    static public void createProject(){
+    public void createProject() {
         Integer clientId = validator.validateInteger(" ==> Entre Client's ID: ");
+        Optional<Client> client = clientService.getClientById(clientId);
 
-        ClientRepository clientRepository = new ClientRepositoryImpl();
-        ClientService clientService = new ClientService(clientRepository);
-        Optional<Client> client =  clientService.getClientById(clientId);
-
-        if(client.isPresent()){
-            ConsolePrinter.printClient(client.get());
+        if (client.isPresent()) {
+            printer.printClient(client.get());
 
             String projectName = validator.validateString("==> Entre Project Name: ");
             Double profit = validator.validateDouble(" ==> Entre Profit Margin (%): ");
 
-            ProjetService projetService = new ProjetService();
-
-            Projet projet = new Projet(null, projectName, profit, 0.0,0.0, EtatProject.PENDING);
+            Projet projet = new Projet(null, projectName, profit, 0.0, 0.0, EtatProject.PENDING);
             projet.setClient(client.get());
 
             materialsLoop:
-            while (true){
+            while (true) {
                 scanner.nextLine();
                 String componentsChoice = validator.validateYesNo(" ==> Do you want to add Materials to this Project? ");
-                switch (componentsChoice){
+                switch (componentsChoice) {
                     case "Y":
                     case "y":
-                        Materiaux materiaux =  ComponentsView.addMaterialsView();
+                        Materiaux materiaux = componentsView.addMaterialsView();
                         projet.getComposants().add(materiaux);
-                        ConsolePrinter.printSuccess("Material Has Been Added Successfully");
+                        printer.printSuccess("Material Has Been Added Successfully");
                         break;
                     case "N":
                     case "n":
                         break materialsLoop;
                     default:
-                        ConsolePrinter.printError("Entre the Right Choice");
+                        printer.printError("Entre the Right Choice");
                 }
             }
 
             laborLoop:
-            while (true){
+            while (true) {
                 scanner.nextLine();
                 System.out.print(" ==> Do you want to add Labor to this Project? [y/n]: ");
                 String laborChoice = validator.validateYesNo(" ==> Do you want to add Labor to this Project?");
-                switch (laborChoice){
+                switch (laborChoice) {
                     case "Y":
                     case "y":
-                        MainDoeuvre mainDoeuvre =  ComponentsView.addLaborView();
+                        MainDoeuvre mainDoeuvre = componentsView.addLaborView();
                         projet.getComposants().add(mainDoeuvre);
-                        ConsolePrinter.printSuccess("Labor Has Been Added Successfully");
+                        printer.printSuccess("Labor Has Been Added Successfully");
                         break;
                     case "N":
                     case "n":
@@ -106,16 +113,16 @@ public class ProjectView {
 
             String marginChoice = validator.validateString(" ==> Do you want to apply a profit margin?");
 
-            if(marginChoice.equals("y")){
+            if (marginChoice.equals("y")) {
                 costBreakdown.setProfit(costBreakdown.getBaseCost() * (projet.getProfit() / 100));
             }
 
             String discountChoice = validator.validateString(" ==> Do you want to apply a Discount to this Client?");
 
-            if(discountChoice.equals("y")){
+            if (discountChoice.equals("y")) {
                 Double discount = validator.validateDouble(" ==> Entre Discount percentage (%): ");
                 projet.setDiscount(discount);
-            }else {
+            } else {
                 projet.setDiscount(0.0);
             }
 
@@ -125,77 +132,67 @@ public class ProjectView {
             projet.setProjectStatus(EtatProject.INPROGRESS);
 
 
-            ConsolePrinter.printCostDetails(costBreakdown);
+            printer.printCostDetails(costBreakdown);
             String saveChoice = validator.validateYesNo(" ==> Do you want to save this project? [y/n]: ");
 
-            if(saveChoice.equals("y")){
+            if (saveChoice.equals("y")) {
                 projetService.createProjetWithComponents(projet);
             }
 
-            DevisService devisService = new DevisService();
-            DevisView.addDevisView(projet);
+            devisView.addDevisView(projet);
 
-        }else {
-            ConsolePrinter.printError("Client not found");
+        } else {
+            printer.printError("Client not found");
         }
 
     }
 
-    static public void getDetailsOfProject(){
+    public void getDetailsOfProject() {
         Integer projectId = validator.validateInteger(" ==> Entre Projects's ID: ");
         scanner.nextLine();
 
-        ProjetService projectService = new ProjetService();
-        Projet project = projectService.getProjetWithComponents(projectId);
+        Projet project = projetService.getProjetWithComponents(projectId);
 
-        if(project != null){
-            ConsolePrinter.printProjectDetails(project);
+        if (project != null) {
+            printer.printProjectDetails(project);
         } else {
-            ConsolePrinter.printError("Project not found");
+            printer.printError("Project not found");
         }
     }
 
-    static public void getAllProjects() {
-        ProjetService projetService = new ProjetService();
-        List<Projet> projetList =  projetService.getAllProjets();
-        projetList.forEach(ConsolePrinter::printProject);
-
+    public void getAllProjects() {
+        List<Projet> projetList = projetService.getAllProjets();
+        projetList.forEach(projet -> printer.printProject(projet));
     }
 
-    static public void getProjectById(){
+    public void getProjectById() {
         int projectID = validator.validateInteger(" ==> Entre the ID of Project: ");
-
-        ProjetService projetService = new ProjetService();
-        Optional<Projet> projetList =  projetService.getProjetById(projectID);
-        projetList.ifPresentOrElse(ConsolePrinter::printProject, () -> ConsolePrinter.printError("Project not found."));
+        Optional<Projet> projetList = projetService.getProjetById(projectID);
+        projetList.ifPresentOrElse(projet -> printer.printProject(projet), () -> printer.printError("Project not found."));
     }
 
-    static public void deleteProject(){
+    public void deleteProject() {
         int projectID = validator.validateInteger(" ==> Entre the ID of Project To Delete: ");
-
-        ProjetService projetService = new ProjetService();
-        boolean isDeleted =  projetService.deleteProjet(projectID);
+        boolean isDeleted = projetService.deleteProjet(projectID);
 
         if (isDeleted) {
-            ConsolePrinter.printSuccess("Deleted Successfully");
+            printer.printSuccess("Deleted Successfully");
         } else {
-            ConsolePrinter.printError("Failed to Delete");
+            printer.printError("Failed to Delete");
         }
     }
 
-    static public void updateProject() {
+    public void updateProject() {
         int projectID = validator.validateInteger(" ==> Enter the ID of Project you want to Update: ");
-
-        ProjetService projectService = new ProjetService();
-        Optional<Projet> project = projectService.getProjetById(projectID);
+        Optional<Projet> project = projetService.getProjetById(projectID);
 
         if (project.isEmpty()) {
-            ConsolePrinter.printError("Project not found with ID: " + projectID);
+            printer.printError("Project not found with ID: " + projectID);
             return;
         }
 
         System.out.println("Current Project details:");
-        ConsolePrinter.printProjectDetails(project.get());
+        printer.printProjectDetails(project.get());
 
         System.out.println("\nEnter new values for the fields you want to update (press Enter to skip):");
 
@@ -237,16 +234,16 @@ public class ProjectView {
             project.get().setClient(client);
         }
 
-        Projet updatedProject = projectService.updateProjet(project.get());
+        Projet updatedProject = projetService.updateProjet(project.get());
 
         if (updatedProject != null) {
-            ConsolePrinter.printSuccess("Project updated successfully");
+            printer.printSuccess("Project updated successfully");
         } else {
-            ConsolePrinter.printError("Failed to update Project");
+            printer.printError("Failed to update Project");
         }
     }
 
-    static private CostBreakdown calculateCost(List<Composants> composants) {
+    public CostBreakdown calculateCost(List<Composants> composants) {
         return composants.stream()
                 .map(composant -> {
                     double baseCost = calculateBaseCost(composant);
@@ -259,7 +256,7 @@ public class ProjectView {
                 ));
     }
 
-    static public double calculateBaseCost(Composants composant) {
+    public double calculateBaseCost(Composants composant) {
         if (composant instanceof Materiaux materiaux) {
             return materiaux.getUnitCost()
                     * materiaux.getQuantity()

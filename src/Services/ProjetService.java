@@ -12,9 +12,13 @@ import java.util.Optional;
 
 public class ProjetService {
     private final ProjetRepository projetRepository;
+    MateriauxService materiauxService;
+    MainDœuvreService mainDœuvreService;
 
-    public ProjetService() {
-        this.projetRepository = new ProjetRepositoryImpl();
+    public ProjetService(ProjetRepository projetRepository, MateriauxService materiauxService, MainDœuvreService mainDœuvreService) {
+        this.projetRepository = projetRepository;
+        this.materiauxService = materiauxService;
+        this.mainDœuvreService = mainDœuvreService;
     }
 
     public Projet createProjet(Projet projet) {
@@ -23,10 +27,6 @@ public class ProjetService {
 
     public Projet createProjetWithComponents(Projet projet) {
         Projet savedProjet = projetRepository.save(projet);
-
-        MateriauxService materiauxService =  new MateriauxService();
-        MainDœuvreService mainDœuvreService =  new MainDœuvreService();
-
         List<Composants> composants =  projet.getComposants();
 
         composants.forEach(composant -> {
@@ -49,15 +49,9 @@ public class ProjetService {
     public Projet getProjetWithComponents(Integer projectId) {
         Optional<Projet> project = projetRepository.findById(projectId);
 
-
-
         if(project.isPresent()) {
-            MateriauxService materiauxService =  new MateriauxService();
-            MainDœuvreService mainDœuvreService =  new MainDœuvreService();
-
             List<Materiaux>  materiauxList = materiauxService.getMateriauxByProjectId(projectId);
             List<MainDoeuvre>  mainDoeuvreList = mainDœuvreService.getMainDœuvreByProjectId(projectId);
-
             project.get().getComposants().addAll(materiauxList);
             project.get().getComposants().addAll(mainDoeuvreList);
         }

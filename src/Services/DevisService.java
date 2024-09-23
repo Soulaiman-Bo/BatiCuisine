@@ -3,7 +3,6 @@ package Services;
 import Domain.Entities.Client;
 import Domain.Entities.Devis;
 import repositories.Devis.DevisRepository;
-import repositories.Devis.DevisRepositoryImpl;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,9 +11,8 @@ import java.util.Optional;
 public class DevisService {
     private final DevisRepository devisRepository;
 
-    public
-    DevisService() {
-        this.devisRepository = new DevisRepositoryImpl();
+    public DevisService(DevisRepository devisRepository) {
+        this.devisRepository = devisRepository;
     }
 
     public Devis createDevis(Devis devis) {

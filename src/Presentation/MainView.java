@@ -1,62 +1,59 @@
-
 package Presentation;
 
-import Domain.Entities.*;
-import Domain.Enums.EtatProject;
-import Domain.Enums.TypeComposant;
-import Services.ClientService;
-import Services.DevisService;
-import Services.ProjetService;
 import Utils.ConsolePrinter;
-import Utils.Types.CostBreakdown;
-import repositories.Client.ClientRepository;
-import repositories.Client.ClientRepositoryImpl;
-import repositories.Projet.ProjetRepository;
-import repositories.Projet.ProjetRepositoryImpl;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Scanner;
 
 public class MainView {
-    private static final Scanner scanner = new Scanner(System.in);
 
-    public static void main() {
+    ProjectView projectView;
+    ClientView clientView;
+    DevisView devisView;
+    ConsolePrinter consolePrinter;
+    Scanner scanner;
+
+    public MainView(ProjectView projectView, ClientView clientView, DevisView devisView, ConsolePrinter consolePrinter, Scanner scanner) {
+        this.projectView = projectView;
+        this.clientView = clientView;
+        this.devisView = devisView;
+        this.consolePrinter = consolePrinter;
+        this.scanner = scanner;
+    }
+
+    public void main() {
         while (true) {
-            ConsolePrinter.mainMenu();
+            consolePrinter.mainMenu();
             int choice = scanner.nextInt();
 
             switch (choice) {
                 case 1:
-                    ProjectView.createProject();
+                    projectView.createProject();
                     break;
                 case 2:
-                    ProjectView.getDetailsOfProject();
+                    projectView.getDetailsOfProject();
                     break;
                 case 3:
-                    ClientView.createClient();
+                    clientView.createClient();
                     break;
                 case 4:
-                    ClientView.acceptDevis();
+                    clientView.acceptDevis();
                     break;
                 case 5:
-                    DevisView.devisMain();
+                    devisView.devisMain();
                     break;
                 case 6:
-                    ProjectView.projectMain();
+                    projectView.projectMain();
                     break;
                 case 7:
-                    ClientView.clientMain();
+                    clientView.clientMain();
                     break;
                 case 8:
                     System.exit(0);
                     break;
                 default:
-                    ConsolePrinter.printError("Invalid choice. Please try again.");
+                    consolePrinter.printError("Invalid choice. Please try again.");
             }
         }
-
-
     }
 
 }
