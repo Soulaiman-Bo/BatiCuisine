@@ -6,7 +6,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class InputValidator {
-    private Scanner scanner;
+    private final Scanner scanner;
 
     public InputValidator() {
         scanner = new Scanner(System.in);
