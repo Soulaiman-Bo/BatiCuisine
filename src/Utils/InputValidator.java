@@ -19,6 +19,7 @@ public class InputValidator {
             System.out.print(prompt);
             if (scanner.hasNextDouble()) {
                 value = scanner.nextDouble();
+                scanner.nextLine();
                 valid = true;
             } else {
                 System.out.println("Invalid input. Please enter a valid double.");
@@ -36,7 +37,6 @@ public class InputValidator {
             System.out.print(prompt);
             if (scanner.hasNextInt()) {
                 value = scanner.nextInt();
-                scanner.next();
                 valid = true;
             } else {
                 System.out.println("Invalid input. Please enter a valid integer.");
