@@ -56,10 +56,6 @@ public class MateriauxRepositoryImpl implements MateriauxRepository {
 
                 } catch (SQLException e) {
                     e.printStackTrace();
-                } finally {
-                    if (dbConnection != null) {
-                        dbConnection.closeConnection();
-                    }
                 }
             }
         } catch (SQLException e) {
@@ -90,10 +86,6 @@ public class MateriauxRepositoryImpl implements MateriauxRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
 
         return Optional.empty();
@@ -120,14 +112,7 @@ public class MateriauxRepositoryImpl implements MateriauxRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
-
-
-
         return materiauxList;
     }
 
@@ -149,10 +134,6 @@ public class MateriauxRepositoryImpl implements MateriauxRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
 
 
@@ -180,10 +161,6 @@ public class MateriauxRepositoryImpl implements MateriauxRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
 
         return materiauxList;

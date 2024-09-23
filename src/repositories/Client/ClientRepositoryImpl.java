@@ -50,14 +50,12 @@ public class ClientRepositoryImpl implements ClientRepository {
                         }
                     }
                 }
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
+
         return client;
     }
 
@@ -80,10 +78,6 @@ public class ClientRepositoryImpl implements ClientRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
         return Optional.empty();
     }
@@ -108,10 +102,6 @@ public class ClientRepositoryImpl implements ClientRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
         return clientList;
     }
@@ -136,10 +126,6 @@ public class ClientRepositoryImpl implements ClientRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
 
         return isDeleted;
@@ -165,10 +151,6 @@ public class ClientRepositoryImpl implements ClientRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
         return clientList;
     }
@@ -241,10 +223,6 @@ public class ClientRepositoryImpl implements ClientRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
 
         return client;

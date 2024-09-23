@@ -56,10 +56,6 @@ import java.util.Optional;
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
-            } finally {
-                if (dbConnection != null) {
-                    dbConnection.closeConnection();
-                }
             }
             return projet;
         }
@@ -82,10 +78,6 @@ import java.util.Optional;
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
-            } finally {
-                if (dbConnection != null) {
-                    dbConnection.closeConnection();
-                }
             }
             return Optional.empty();
         }
@@ -109,10 +101,6 @@ import java.util.Optional;
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
-            } finally {
-                if (dbConnection != null) {
-                    dbConnection.closeConnection();
-                }
             }
             return projetList;
         }
@@ -137,12 +125,7 @@ import java.util.Optional;
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
-            } finally {
-                if (dbConnection != null) {
-                    dbConnection.closeConnection();
-                }
             }
-
             return isDeleted;
         }
 
@@ -227,10 +210,6 @@ import java.util.Optional;
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
-            } finally {
-                if (dbConnection != null) {
-                    dbConnection.closeConnection();
-                }
             }
 
             return projet;

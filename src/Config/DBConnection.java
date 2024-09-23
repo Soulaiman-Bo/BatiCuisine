@@ -48,4 +48,28 @@ public class DBConnection {
         }
     }
 
+    public void startTransaction() throws SQLException {
+        if (connection != null && !connection.isClosed()) {
+            connection.setAutoCommit(false);
+        } else {
+            throw new SQLException("Connection is not open. Cannot start transaction.");
+        }
+    }
+
+    public void commitTransaction() throws SQLException {
+        if (connection != null && !connection.isClosed()) {
+            connection.commit();
+        } else {
+            throw new SQLException("Connection is not open. Cannot commit transaction.");
+        }
+    }
+
+    public void rollbackTransaction() throws SQLException {
+        if (connection != null && !connection.isClosed()) {
+            connection.rollback();
+        } else {
+            throw new SQLException("Connection is not open. Cannot rollback transaction.");
+        }
+    }
+
 }

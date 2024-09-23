@@ -56,12 +56,7 @@ public class DevisRepositoryImpl implements DevisRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
-
 
         return devis;
     }
@@ -86,13 +81,7 @@ public class DevisRepositoryImpl implements DevisRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
-
-
         return Optional.empty();
     }
 
@@ -115,12 +104,7 @@ public class DevisRepositoryImpl implements DevisRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
-
 
         return devisList;
     }
@@ -147,10 +131,6 @@ public class DevisRepositoryImpl implements DevisRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
 
         return isDeleted;
@@ -178,12 +158,7 @@ public class DevisRepositoryImpl implements DevisRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
-
 
         return devisList;
     }
@@ -260,10 +235,6 @@ public class DevisRepositoryImpl implements DevisRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
 
         return devis;

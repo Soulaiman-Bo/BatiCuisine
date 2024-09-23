@@ -58,10 +58,6 @@ public class MainDoeuvreRepositoryImpl implements MainDoeuvreRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
 
 
@@ -89,10 +85,6 @@ public class MainDoeuvreRepositoryImpl implements MainDoeuvreRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
 
 
@@ -120,10 +112,6 @@ public class MainDoeuvreRepositoryImpl implements MainDoeuvreRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
 
 
@@ -176,10 +164,6 @@ public class MainDoeuvreRepositoryImpl implements MainDoeuvreRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (dbConnection != null) {
-                dbConnection.closeConnection();
-            }
         }
 
         return mainDoeuvreList;
