@@ -32,6 +32,7 @@ public class ClientView {
                     break;
                 case 2:
                     // Get Client By Id
+                    getClientById();
                     break;
                 case 3:
                     // Delete Client
@@ -125,6 +126,14 @@ public class ClientView {
         clientList.forEach(ConsolePrinter::printClient);
     }
 
+    static public void getClientById(){
+        System.out.print(" ==> Entre the ID of The Client: ");
+        int clientID = scanner.nextInt();
+        ClientRepository clientRepository = new ClientRepositoryImpl();
+        ClientService clientService = new ClientService(clientRepository);
+        Optional<Client> clientList =  clientService.getClientById(clientID);
+        clientList.ifPresentOrElse(ConsolePrinter::printClient, () -> ConsolePrinter.printError("Client not found."));
+    }
 
 
 }
