@@ -149,8 +149,56 @@ public class ClientView {
         }
     }
 
-    static public void updateClient(){
+    public static void updateClient() {
+        System.out.print(" ==> Enter the ID of Client you want to Update: ");
+        int clientID = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
 
+        ClientRepository clientRepository = new ClientRepositoryImpl();
+        ClientService clientService = new ClientService(clientRepository);
+        Optional<Client> client = clientService.getClientById(clientID);
+
+        if (client.isEmpty()) {
+            ConsolePrinter.printError("Client not found with ID: " + clientID);
+            return;
+        }
+
+        System.out.println("Current Client details:");
+        ConsolePrinter.printClient(client.get());
+
+        System.out.println("\nEnter new values for the fields you want to update (press Enter to skip):");
+
+        System.out.print("Name (current: " + client.get().getName() + "): ");
+        String nameInput = scanner.nextLine();
+        if (!nameInput.isEmpty()) {
+            client.get().setName(nameInput);
+        }
+
+        System.out.print("Address (current: " + client.get().getAddress() + "): ");
+        String addressInput = scanner.nextLine();
+        if (!addressInput.isEmpty()) {
+            client.get().setAddress(addressInput);
+        }
+
+        System.out.print("Phone Number (current: " + client.get().getPhoneNumber() + "): ");
+        String phoneNumberInput = scanner.nextLine();
+        if (!phoneNumberInput.isEmpty()) {
+            client.get().setPhoneNumber(phoneNumberInput);
+        }
+
+        System.out.print("Is Professional (current: " + client.get().getProfessional() + ") (true/false): ");
+        String isProfessionalInput = scanner.nextLine();
+        if (!isProfessionalInput.isEmpty()) {
+            client.get().setProfessional(Boolean.parseBoolean(isProfessionalInput));
+        }
+
+        Client updatedClient = clientService.updateClient(client.get());
+
+        if (updatedClient != null) {
+            ConsolePrinter.printSuccess("Client updated successfully");
+        } else {
+            ConsolePrinter.printError("Failed to update Client");
+        }
     }
 
 }

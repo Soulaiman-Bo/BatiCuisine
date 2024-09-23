@@ -173,4 +173,82 @@ public class ClientRepositoryImpl implements ClientRepository {
         return clientList;
     }
 
+    @Override
+    public Client update(Client client) {
+        if (client.getId() == null) {
+            throw new IllegalArgumentException("Cannot update a Client without an ID");
+        }
+
+        StringBuilder sql = new StringBuilder("UPDATE clients SET ");
+        List<Object> params = new ArrayList<>();
+        boolean needComma = false;
+
+        if (client.getName() != null) {
+            sql.append("name = ?");
+            params.add(client.getName());
+            needComma = true;
+        }
+        if (client.getAddress() != null) {
+            if (needComma) sql.append(", ");
+            sql.append("address = ?");
+            params.add(client.getAddress());
+            needComma = true;
+        }
+        if (client.getPhoneNumber() != null) {
+            if (needComma) sql.append(", ");
+            sql.append("phonenumber = ?");
+            params.add(client.getPhoneNumber());
+            needComma = true;
+        }
+        if (client.getProfessional() != null) {
+            if (needComma) sql.append(", ");
+            sql.append("isprofessional = ?");
+            params.add(client.getProfessional());
+        }
+
+        sql.append(" WHERE id = ?");
+        params.add(client.getId());
+
+        sql.append(" RETURNING *");
+
+        DBConnection dbConnection = null;
+        Connection connection = null;
+
+        try {
+            dbConnection = DBConnection.getInstance();
+            if (dbConnection != null) {
+                connection = dbConnection.getConnection();
+
+                try (PreparedStatement stmt = connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS)) {
+                    for (int i = 0; i < params.size(); i++) {
+                        stmt.setObject(i + 1, params.get(i));
+                    }
+
+                    int affectedRows = stmt.executeUpdate();
+
+                    if (affectedRows == 0) {
+                        throw new SQLException("Updating client failed, no rows affected.");
+                    }
+
+                    try (ResultSet rs = stmt.getGeneratedKeys()) {
+                        if (rs.next()) {
+                            client = Mappers.mapResultSetToClient(rs);
+                        } else {
+                            throw new SQLException("Updating client failed, no rows returned.");
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (dbConnection != null) {
+                dbConnection.closeConnection();
+            }
+        }
+
+        return client;
+    }
+
+
 }

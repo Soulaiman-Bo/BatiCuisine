@@ -25,11 +25,9 @@ public class ProjectView {
 
             switch (projectChoice) {
                 case 1:
-                    // Get All Projects
                     getAllProjects();
                     break;
                 case 2:
-                    // Get Project By Id
                     getProjectById();
                     break;
                 case 3:
@@ -258,6 +256,8 @@ public class ProjectView {
             ConsolePrinter.printError("Failed to update Project");
         }
     }
+
+
 
     static private CostBreakdown calculateCost(List<Composants> composants) {
         return composants.stream()

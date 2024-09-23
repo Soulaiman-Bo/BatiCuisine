@@ -43,9 +43,9 @@ public class ConsolePrinter {
         System.out.println(" +----------------------------------------+");
         System.out.println(" |  1. Get All Clients                    |");
         System.out.println(" |  2. Get Client By Id                   |");
-        System.out.println(" |  2. Delete Client                      |");
-        System.out.println(" |  3. Update Client                      |");
-        System.out.println(" |  4. Exit                               |");
+        System.out.println(" |  3. Delete Client                      |");
+        System.out.println(" |  4. Update Client                      |");
+        System.out.println(" |  5. Exit                               |");
         System.out.println(" +----------------------------------------+");
         System.out.print(" ==> Enter your choice: ");
     }

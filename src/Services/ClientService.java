@@ -32,6 +32,9 @@ public class ClientService {
     public boolean deleteClient(Integer id) {
         return clientRepository.deleteById(id);
     }
+    public Client upddateClient(Client client) {
+        return clientRepository.update(client);
+    }
 
     public List<Client> getProfessionalClients() {
         return clientRepository.findByProfessional(true);
