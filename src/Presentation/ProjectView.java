@@ -159,13 +159,17 @@ public class ProjectView {
         ProjetService projectService = new ProjetService();
         Projet project = projectService.getProjetWithComponents(projectId);
 
-        ConsolePrinter.printProjectDetails(project);
+        if(project != null){
+            ConsolePrinter.printProjectDetails(project);
+        } else {
+            ConsolePrinter.printError("Project not found");
+        }
     }
 
     static public void getAllProjects() {
         ProjetService projetService = new ProjetService();
         List<Projet> projetList =  projetService.getAllProjets();
-        projetList.forEach(ConsolePrinter::printProjectDetails);
+        projetList.forEach(ConsolePrinter::printProject);
 
     }
 
@@ -175,7 +179,7 @@ public class ProjectView {
 
         ProjetService projetService = new ProjetService();
         Optional<Projet> projetList =  projetService.getProjetById(projectID);
-        projetList.ifPresentOrElse(ConsolePrinter::printProjectDetails, () -> ConsolePrinter.printError("Project not found."));
+        projetList.ifPresentOrElse(ConsolePrinter::printProject, () -> ConsolePrinter.printError("Project not found."));
     }
 
     static public void deleteProject(){
@@ -256,8 +260,6 @@ public class ProjectView {
             ConsolePrinter.printError("Failed to update Project");
         }
     }
-
-
 
     static private CostBreakdown calculateCost(List<Composants> composants) {
         return composants.stream()

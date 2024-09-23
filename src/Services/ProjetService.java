@@ -49,6 +49,8 @@ public class ProjetService {
     public Projet getProjetWithComponents(Integer projectId) {
         Optional<Projet> project = projetRepository.findById(projectId);
 
+
+
         if(project.isPresent()) {
             MateriauxService materiauxService =  new MateriauxService();
             MainDœuvreService mainDœuvreService =  new MainDœuvreService();
