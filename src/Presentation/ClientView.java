@@ -6,6 +6,7 @@ import Services.ClientService;
 import Services.DevisService;
 import Services.ProjetService;
 import Utils.ConsolePrinter;
+import Utils.InputValidator;
 import Utils.Types.CostBreakdown;
 import repositories.Client.ClientRepository;
 import repositories.Client.ClientRepositoryImpl;
@@ -18,12 +19,13 @@ import java.util.Scanner;
 public class ClientView {
 
     private static final Scanner scanner = new Scanner(System.in);
+    private static final InputValidator validator = new InputValidator();
 
     static public void clientMain(){
         clientLoop:
         while (true) {
             ConsolePrinter.clientMenu();
-            int clientChoice = scanner.nextInt();
+            int clientChoice = validator.validateInteger("");
 
             switch (clientChoice) {
                 case 1:
@@ -48,15 +50,10 @@ public class ClientView {
     }
 
     static public void createClient(){
-        System.out.print(" ==> Entre FullName: ");
-        String name = scanner.nextLine();
-        System.out.print(" ==> Entre Address: ");
-        String address = scanner.nextLine();
-        System.out.print(" ==> Entre Phone Number: ");
-        String phoneNumber = scanner.nextLine();
-        System.out.print(" ==> is Professional ? (n/y): ");
-        String isProfessional = scanner.nextLine();
-
+        String name = validator.validateString(" ==> Entre FullName: ");
+        String address = validator.validateString(" ==> Entre Address: ");
+        String phoneNumber = validator.validateString(" ==> Entre Phone Number: ");
+        String isProfessional = validator.validateYesNo(" ==> is Professional ?");
 
         Boolean ispro = isProfessional.equals("y") ? Boolean.TRUE : Boolean.FALSE;
         ClientRepository clientRepository = new ClientRepositoryImpl();
@@ -67,9 +64,7 @@ public class ClientView {
     }
 
     static public void acceptDevis(){
-        System.out.print(" ==> Entre Client's ID: ");
-        Integer clientId = scanner.nextInt();
-        scanner.nextLine();
+        Integer clientId = validator.validateInteger(" ==> Entre Client's ID: ");
 
         ClientRepository clientRepository = new ClientRepositoryImpl();
         ClientService clientService = new ClientService(clientRepository);
@@ -84,15 +79,10 @@ public class ClientView {
             for(Devis devis : devisList){
                 ConsolePrinter.printDevis(devis);
             }
-
-            System.out.print(" ==> Do you want to accept a devis? [y/n]: ");
-            String saveChoice = scanner.nextLine();
-
+            String saveChoice = validator.validateYesNo(" ==> Do you want to accept a devis?");
             if(saveChoice.equals("y")){
-                System.out.print(" ==> Enter Devis ID [To Accept]: ");
-                Integer devisId = scanner.nextInt();
-                scanner.nextLine();
 
+                Integer devisId = validator.validateInteger(" ==> Enter Devis ID [To Accept]: ");
                 Devis currentdevis = devisList.stream()
                         .filter(devis -> Objects.equals(devis.getId(), devisId))
                         .findFirst()
@@ -126,8 +116,7 @@ public class ClientView {
     }
 
     static public void getClientById(){
-        System.out.print(" ==> Entre the ID of The Client: ");
-        int clientID = scanner.nextInt();
+        int clientID = validator.validateInteger(" ==> Entre the ID of The Client: ");
         ClientRepository clientRepository = new ClientRepositoryImpl();
         ClientService clientService = new ClientService(clientRepository);
         Optional<Client> clientList =  clientService.getClientById(clientID);
@@ -135,8 +124,7 @@ public class ClientView {
     }
 
     static public void deleteClient(){
-        System.out.print(" ==> Entre the ID of Client To Delete: ");
-        int clientId = scanner.nextInt();
+        int clientId = validator.validateInteger(" ==> Entre the ID of Client To Delete: ");
 
         ClientRepository clientRepository = new ClientRepositoryImpl();
         ClientService clientService = new ClientService(clientRepository);
