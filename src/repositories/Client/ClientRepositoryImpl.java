@@ -117,8 +117,9 @@ public class ClientRepositoryImpl implements ClientRepository {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public boolean deleteById(Integer id) {
         String sql = "DELETE FROM Clients WHERE id = ?";
+        boolean isDeleted = false;
 
         try {
             dbConnection = DBConnection.getInstance();
@@ -127,7 +128,10 @@ public class ClientRepositoryImpl implements ClientRepository {
 
                 try (PreparedStatement stmt = connection.prepareStatement(sql)) {
                     stmt.setInt(1, id);
-                    stmt.executeUpdate();
+                    int affectedRows = stmt.executeUpdate();
+                    if (affectedRows > 0) {
+                        isDeleted = true;
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -137,6 +141,8 @@ public class ClientRepositoryImpl implements ClientRepository {
                 dbConnection.closeConnection();
             }
         }
+
+        return isDeleted;
     }
 
     @Override

@@ -9,7 +9,7 @@ public interface ClientRepository {
     Client save(Client client);
     Optional<Client> findById(Integer id);
     List<Client> findAll();
-    void deleteById(Integer id);
+    boolean deleteById(Integer id);
     List<Client> findByProfessional(Boolean isProfessional);
 }
 

@@ -27,18 +27,17 @@ public class ClientView {
 
             switch (clientChoice) {
                 case 1:
-                    // Get All Clients
                     getAllClients();
                     break;
                 case 2:
-                    // Get Client By Id
                     getClientById();
                     break;
                 case 3:
-                    // Delete Client
+                    deleteClient();
                     break;
                 case 4:
                     // Update Client
+                    updateClient();
                     break;
                 case 5:
                     break clientLoop;
@@ -135,5 +134,23 @@ public class ClientView {
         clientList.ifPresentOrElse(ConsolePrinter::printClient, () -> ConsolePrinter.printError("Client not found."));
     }
 
+    static public void deleteClient(){
+        System.out.print(" ==> Entre the ID of Client To Delete: ");
+        int clientId = scanner.nextInt();
+
+        ClientRepository clientRepository = new ClientRepositoryImpl();
+        ClientService clientService = new ClientService(clientRepository);
+        boolean isDeleted =  clientService.deleteClient(clientId);
+
+        if (isDeleted) {
+            ConsolePrinter.printSuccess("Deleted Successfully");
+        } else {
+            ConsolePrinter.printError("Failed to Delete");
+        }
+    }
+
+    static public void updateClient(){
+
+    }
 
 }

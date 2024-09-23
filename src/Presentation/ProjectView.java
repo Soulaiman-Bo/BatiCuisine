@@ -33,11 +33,9 @@ public class ProjectView {
                     getProjectById();
                     break;
                 case 3:
-                    // Delete Project
                     deleteProject();
                     break;
                 case 4:
-                    // Update Project
                     updateProject();
                     break;
                 case 5:
