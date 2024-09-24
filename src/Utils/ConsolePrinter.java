@@ -1,10 +1,8 @@
 package Utils;
 
 import Domain.Entities.*;
-import Presentation.ProjectView;
 import Utils.Types.CostBreakdown;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 public class ConsolePrinter {
@@ -127,75 +125,86 @@ public class ConsolePrinter {
     }
 
     public void printProjectDetails(Projet projet) {
-        System.out.println(" +----------------------------------------------------------------------+");
-        System.out.println(" |                             Project                                  |");
-        System.out.println(" +----------------------------------------------------------------------+");
-        System.out.println(" | Project ID         | " + projet.getId());
-        System.out.println(" | Project Name       | " + projet.getProjectName());
-        System.out.println(" | Project Status     | " + projet.getProjectStatus().toString());
-        System.out.println(" | Project Cost       | " + projet.getTotalCost().toString());
-        System.out.println(" | Client ID          | " + projet.getClient().getId());
+        String redText = "\033[0;31m";
+        String resetText = "\u001B[36m";
+        String yellowText = "\033[0m";
 
+        System.out.print(resetText);
+// Top border for Project section
+        System.out.println(" +----------------------------------------------------------------------------------+");
+        System.out.println(" |                                     Project                                      |");
+        System.out.println(" +----------------------------------------------------------------------------------+");
+        System.out.print(yellowText);
+// Two columns and two rows for project information
+        System.out.printf(" | %-17s %-21s | %-17s %-19s  |%n", "Project ID", projet.getId(), "Project Name", projet.getProjectName());
+        System.out.printf(" | %-17s %-21s | %-17s %-19s  |%n", "Project Status", projet.getProjectStatus().toString(), "Client ID", projet.getClient().getId());
+        System.out.print(resetText);
         if (!projet.getComposants().isEmpty()) {
-            System.out.println(" +----------------------------------------------------------------------+");
-            System.out.println(" |                            Materiaux                                 |");
-            System.out.println(" +----------------------------------------------------------------------+");
-            String redText = "\033[0;31m";
-            String resetText = "\033[0m";
+            System.out.println(" +----------------------------------------------------------------------------------+");
+            System.out.println(" |                                    Materiaux                                     |");
+            System.out.println(" +----------------------------------------------------------------------------------+");
             System.out.print(redText);
-            System.out.printf(" | %-15s%-10s%-10s%-15s%-10s%-10s%n", "Item", "price", "Qty", "Transport", "Tax%", "Total");
+            System.out.printf(" | %-15s%-10s%-10s%-15s%-10s%-10s%-10s |%n", "Item", "price", "Qty", "Transport", "Tax%", "CoEf", "Total");
             System.out.print(resetText);
 
-//            projet.getComposants().stream().filter(composants -> composants instanceof Materiaux).forEach(composants -> {
-//                double baseCost = projectView.calculateBaseCost(composants);
-//                double taxAmount = baseCost * (composants.getTaxRate() / 100);
-//                CostBreakdown costBreakdown = new CostBreakdown(baseCost, taxAmount);
-//
-//                System.out.printf(" | %-15s%-10s%-10s%-15s%-10s%-10s%n",
-//                        composants.getName(),
-//                        "$" + ((Materiaux) composants).getUnitCost(),
-//                        ((Materiaux) composants).getQuantity(),
-//                        ((Materiaux) composants).getTransportCost(),
-//                        ((Materiaux) composants).getTaxRate(),
-//                        "$" + costBreakdown.getTotalCost());
-//
-//            });
+
+            System.out.print(yellowText);
+            projet.getComposants().stream().filter(composants -> composants instanceof Materiaux).forEach(composants -> {
+
+                CostBreakdown costBreakdown = CostCalculator.calculateBaseCostOfMateriaux((Materiaux) composants);
+                System.out.printf(" | %-15s%-10s%-10s%-15s%-10s%-10s%-10s |%n",
+                        composants.getName(),
+                        ((Materiaux) composants).getUnitCost(),
+                        ((Materiaux) composants).getQuantity(),
+                        ((Materiaux) composants).getTransportCost(),
+                        composants.getTaxRate(),
+                        ((Materiaux) composants).getQualityCoefficient(),
+                        costBreakdown.getTotalCost());
+            });
+            System.out.print(resetText);
 
             Stream<Composants> filteredMainDoeuvre = projet.getComposants().stream().filter(composant -> composant instanceof MainDoeuvre);
-            if (filteredMainDoeuvre.findAny().isPresent()) {
-                System.out.println(" +----------------------------------------------------------------------+");
-                System.out.println(" |                           MainDoeuvre                                |");
-                System.out.println(" +----------------------------------------------------------------------+");
-                System.out.print(redText);
-                System.out.printf(" | %-15s%-15s%-15s%-15s%-15s", "Name", "Price[Hour]", "Work Hours", "Tax[%]", "Total");
-                System.out.print(resetText);
 
-//                projet.getComposants().stream()
-//                        .filter(composant -> composant instanceof MainDoeuvre)
-//                        .forEach(composants -> {
-//                            double baseCost = projectView.calculateBaseCost(composants);
-//                            double taxAmount = baseCost * (composants.getTaxRate() / 100);
-//                            CostBreakdown costBreakdown = new CostBreakdown(baseCost, taxAmount);
-//
-//                            System.out.println();
-//                            System.out.printf(" | %-15s%-15s%-15s%-15s%-15s",
-//                                    composants.getName(),
-//                                    "$" + ((MainDoeuvre) composants).getHourlyRate(),
-//                                    ((MainDoeuvre) composants).getWorkHoursCount(),
-//                                    composants.getTaxRate(),
-//                                    "$" + costBreakdown.getTotalCost());
-//
-//                        });
+            if (filteredMainDoeuvre.findAny().isPresent()) {
+                System.out.println(" +----------------------------------------------------------------------------------+");
+                System.out.println(" |                                   MainDoeuvre                                    |");
+                System.out.println(" +----------------------------------------------------------------------------------+");
+                System.out.print(redText);
+                System.out.printf(" | %-15s%-15s%-10s%-15s%-15s%-10s |%n", "Name", "Price", "Hours", "Productivity", "Tax[%]", "Total");
+                System.out.print(resetText);
+                System.out.print(yellowText);
+                projet.getComposants().stream().filter(composant -> composant instanceof MainDoeuvre).forEach(composants -> {
+                    CostBreakdown costBreakdown = CostCalculator.calculateBaseCostOfMainDoeuvre((MainDoeuvre) composants);
+                    System.out.printf(" | %-15s%-15.1f%-10.1f%-15.1f%-15.1f%-10.1f |%n",
+                            composants.getName(),
+                            ((MainDoeuvre) composants).getHourlyRate(),
+                            ((MainDoeuvre) composants).getWorkHoursCount(),
+                            ((MainDoeuvre) composants).getProductivityRate(),
+                            composants.getTaxRate(),
+                            costBreakdown.getTotalCost());
+                });
+                System.out.print(resetText);
             }
 
-//            CostBreakdown costBreakdown = projectView.calculateCost(projet.getComposants());
-//            costBreakdown.setProfit(costBreakdown.getBaseCost() * (projet.getProfit() / 100));
-//            costBreakdown.setDiscount(costBreakdown.getProfit() * (projet.getDiscount() / 100));
+            CostBreakdown costBreakdown = CostCalculator.calculateCost(projet.getComposants());
+            double profitAmount = costBreakdown.getBaseCost() * (projet.getProfit() / 100);
+            costBreakdown.setProfit(profitAmount);
+            double discountAmount = costBreakdown.getProfit() * (projet.getDiscount() / 100);
+            costBreakdown.setDiscount(discountAmount);
 
-            System.out.println("\n +----------------------------------------------------------------------+");
-           // System.out.printf(" | %-60s$%-10s%n", "Total Cost:", costBreakdown.getTotalCost());
-            System.out.println(" +----------------------------------------------------------------------+");
 
+            System.out.println(" +----------------------------------------------------------------------------------+");
+            System.out.print(redText);
+            System.out.printf(" | %-40s%-20s%-20s |%n", "", "Percentage", "Amount [MAD]");
+            System.out.print(resetText);
+            System.out.print(yellowText);
+            System.out.printf(" | %-40s%-20s%-20.2f |%n", "Profit Margin [%]:", "% " + projet.getProfit(), profitAmount);
+            System.out.printf(" | %-40s%-20s%-20.2f |%n", "Tax Amount [MAD]:", "", costBreakdown.getTaxAmount());
+            System.out.printf(" | %-40s%-20s%-20.2f |%n", "Base Cost [MAD]:", "", costBreakdown.getBaseCost());
+            System.out.printf(" | %-40s%-20s%-20.2f |%n", "Discount [% Of Profit]:", "% " + projet.getDiscount(), discountAmount);
+            System.out.printf(" | %-40s%-20s%-20.2f |%n", "Total Cost [MAD]:", "", costBreakdown.getTotalCost());
+            System.out.print(resetText);
+            System.out.println(" +----------------------------------------------------------------------------------+");
         }
     }
 
