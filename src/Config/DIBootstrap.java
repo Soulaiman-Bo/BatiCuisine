@@ -27,10 +27,11 @@ public class DIBootstrap {
         instances.put(type, instance);
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T resolve(Class<T> type) {
-        T instance = (T) instances.get(type);
+        Object instance = instances.get(type);
         if (instance != null) {
-            return instance;
+            return (T) instance;
         }
 
         Constructor<?>[] constructors = type.getConstructors();
@@ -41,9 +42,9 @@ public class DIBootstrap {
                 params[i] = resolve(paramTypes[i]);
             }
             try {
-                instance = (T) constructor.newInstance(params);
-                register(type, instance);
-                return instance;
+                instance = constructor.newInstance(params);
+                register(type, (T) instance);
+                return (T) instance;
             } catch (Exception e) {
                 e.printStackTrace();
             }
