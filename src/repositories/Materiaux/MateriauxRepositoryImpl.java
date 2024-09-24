@@ -15,9 +15,7 @@ public class MateriauxRepositoryImpl implements MateriauxRepository {
 
     @Override
     public Materiaux save(Materiaux materiau) {
-        String sql = materiau.getId() == null ?
-                "INSERT INTO Materiaux (name, taxRate, unitCost, quantity, transportCost, qualityCoefficient, project_id) VALUES (?, ?, ?, ?, ?, ?, ?)" :
-                "UPDATE Materiaux SET name = ?, taxRate = ?, unitCost = ?, quantity = ?, transportCost = ?, qualityCoefficient = ? WHERE id = ?";
+        String sql = "INSERT INTO Materiaux (name, taxRate, composanttype, unitCost, quantity, transportCost, qualityCoefficient, project_id) VALUES (?, ?, ?::typecomposant, ?, ?, ?, ?, ?)";
 
         try {
             dbConnection = DBConnection.getInstance();
@@ -27,16 +25,13 @@ public class MateriauxRepositoryImpl implements MateriauxRepository {
                 try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                     stmt.setString(1, materiau.getName());
                     stmt.setDouble(2, materiau.getTaxRate());
-                    stmt.setDouble(3, materiau.getUnitCost());
-                    stmt.setDouble(4, materiau.getQuantity());
-                    stmt.setDouble(5, materiau.getTransportCost());
-                    stmt.setDouble(6, materiau.getQualityCoefficient());
-                    stmt.setDouble(7, materiau.getProjet().getId());
+                    stmt.setString(3, materiau.getComponentType().name());
+                    stmt.setDouble(4, materiau.getUnitCost());
+                    stmt.setDouble(5, materiau.getQuantity());
+                    stmt.setDouble(6, materiau.getTransportCost());
+                    stmt.setDouble(7, materiau.getQualityCoefficient());
+                    stmt.setDouble(8, materiau.getProjet().getId());
 
-
-                    if (materiau.getId() != null) {
-                        stmt.setInt(7, materiau.getId());
-                    }
 
                     int affectedRows = stmt.executeUpdate();
 

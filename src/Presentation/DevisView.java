@@ -7,7 +7,6 @@ import Utils.ConsolePrinter;
 import Utils.InputValidator;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -53,19 +52,12 @@ public class DevisView {
     }
 
     public void addDevisView(Projet projet) {
-        System.out.print(" ==> Do you want to Create Devis? [y/n]: ");
-        String devisChoice = validator.validateYesNo(" ==> Do you want to Create Devis?");
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate issueDate = null;
         LocalDate validity = null;
 
-        if (devisChoice.equals("y")) {
-            issueDate = validator.validateLocalDate(" ==> Entre the issue date  [YYYY-MM-DD]: ");
-            validity = validator.validateLocalDate(" ==> Valid Until [YYYY-MM-DD]: ");
-        }
+        issueDate = validator.validateLocalDate(" ==> Entre the issue date  [YYYY-MM-DD]: ");
+        validity = validator.validateLocalDate(" ==> Valid Until [YYYY-MM-DD]: ");
 
-//        DevsService devisService = new DevisService();
         Devis devis = new Devis(
                 null,
                 projet.getTotalCost(),
@@ -75,9 +67,8 @@ public class DevisView {
                 projet
         );
 
-        printer.printDevis(devis);
-        devisService.createDevis(devis);
-
+        Devis createdDevis = devisService.createDevis(devis);
+        printer.printDevis(createdDevis);
     }
 
     public void getAllDevis() {

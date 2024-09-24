@@ -17,7 +17,7 @@ public class MainDoeuvreRepositoryImpl implements MainDoeuvreRepository {
     @Override
     public MainDoeuvre save(MainDoeuvre mainDoeuvre) {
         String sql = mainDoeuvre.getId() == null ?
-                "INSERT INTO MainDœuvre (name, taxRate, hourlyRate, workHoursCount, productivityRate, project_id) VALUES (?, ?, ?, ?, ?, ?)" :
+                "INSERT INTO MainDœuvre (name, taxRate, composanttype, hourlyRate, workHoursCount, productivityRate, project_id) VALUES (?, ?, ?, ?, ?, ?)" :
                 "UPDATE MainDœuvre SET name = ?, taxRate = ?, hourlyRate = ?, workHoursCount = ?, productivityRate = ? WHERE id = ?";
 
         try {
@@ -28,10 +28,11 @@ public class MainDoeuvreRepositoryImpl implements MainDoeuvreRepository {
                 try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                     stmt.setString(1, mainDoeuvre.getName());
                     stmt.setDouble(2, mainDoeuvre.getTaxRate());
-                    stmt.setDouble(3, mainDoeuvre.getHourlyRate());
-                    stmt.setDouble(4, mainDoeuvre.getWorkHoursCount());
-                    stmt.setDouble(5, mainDoeuvre.getProductivityRate());
-                    stmt.setDouble(6, mainDoeuvre.getProjet().getId());
+                    stmt.setString(3, mainDoeuvre.getComponentType().name());
+                    stmt.setDouble(4, mainDoeuvre.getHourlyRate());
+                    stmt.setDouble(5, mainDoeuvre.getWorkHoursCount());
+                    stmt.setDouble(6, mainDoeuvre.getProductivityRate());
+                    stmt.setDouble(7, mainDoeuvre.getProjet().getId());
 
                     if (mainDoeuvre.getId() != null) {
                         stmt.setInt(6, mainDoeuvre.getId());
@@ -59,7 +60,6 @@ public class MainDoeuvreRepositoryImpl implements MainDoeuvreRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
 
         return mainDoeuvre;
     }
