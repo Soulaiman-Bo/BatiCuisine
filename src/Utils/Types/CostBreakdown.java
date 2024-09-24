@@ -1,9 +1,9 @@
 package Utils.Types;
 
 public class CostBreakdown {
-    private double baseCost;
-    private double taxAmount;
-    private double totalCost;
+    private final double baseCost;
+    private final double taxAmount;
+    private final double totalCost;
     private double profit;
     private double discount;
 
@@ -15,15 +15,24 @@ public class CostBreakdown {
     }
 
     // Getters
-    public double getBaseCost() { return baseCost; }
-    public double getTaxAmount() { return taxAmount; }
-    public double getTotalCost() { return (baseCost + taxAmount + profit) - discount; }
+    public double getBaseCost() {
+        return baseCost;
+    }
+
+    public double getTaxAmount() {
+        return taxAmount;
+    }
+
+    public double getTotalCost() {
+        return (baseCost + taxAmount + profit) - discount;
+    }
 
     public double getProfit() {
         return profit;
     }
 
     public void setProfit(double profit) {
+
         this.profit = profit;
     }
 

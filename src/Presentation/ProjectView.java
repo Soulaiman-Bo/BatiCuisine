@@ -5,6 +5,7 @@ import Domain.Enums.EtatProject;
 import Services.ClientService;
 import Services.ProjetService;
 import Utils.ConsolePrinter;
+import Utils.CostCalculator;
 import Utils.InputValidator;
 import Utils.Types.CostBreakdown;
 
@@ -74,7 +75,7 @@ public class ProjectView {
 
             materialsLoop:
             while (true) {
-                scanner.nextLine();
+//                scanner.nextLine();
                 String componentsChoice = validator.validateYesNo(" ==> Do you want to add Materials to this Project? ");
                 switch (componentsChoice) {
                     case "Y":
@@ -94,7 +95,6 @@ public class ProjectView {
             laborLoop:
             while (true) {
                 scanner.nextLine();
-                System.out.print(" ==> Do you want to add Labor to this Project? [y/n]: ");
                 String laborChoice = validator.validateYesNo(" ==> Do you want to add Labor to this Project?");
                 switch (laborChoice) {
                     case "Y":
@@ -109,18 +109,18 @@ public class ProjectView {
                 }
             }
 
-            CostBreakdown costBreakdown = calculateCost(projet.getComposants());
+            CostBreakdown costBreakdown = CostCalculator.calculateCost(projet.getComposants());
 
-            String marginChoice = validator.validateString(" ==> Do you want to apply a profit margin?");
+            String marginChoice = validator.validateYesNo(" ==> Do you want to apply a profit margin?");
 
             if (marginChoice.equals("y")) {
                 costBreakdown.setProfit(costBreakdown.getBaseCost() * (projet.getProfit() / 100));
             }
 
-            String discountChoice = validator.validateString(" ==> Do you want to apply a Discount to this Client?");
+            String discountChoice = validator.validateYesNo(" ==> Do you want to apply a Discount to this Client? ");
 
             if (discountChoice.equals("y")) {
-                Double discount = validator.validateDouble(" ==> Entre Discount percentage (%): ");
+                Double discount = validator.validateDouble(" ==> Entre Discount percentage [%]: ");
                 projet.setDiscount(discount);
             } else {
                 projet.setDiscount(0.0);
@@ -131,15 +131,17 @@ public class ProjectView {
             projet.setTotalCost(costBreakdown.getTotalCost());
             projet.setProjectStatus(EtatProject.INPROGRESS);
 
-
             printer.printCostDetails(costBreakdown);
-            String saveChoice = validator.validateYesNo(" ==> Do you want to save this project? [y/n]: ");
+            String saveChoice = validator.validateYesNo(" ==> Do you want to save this project? ");
 
             if (saveChoice.equals("y")) {
                 projetService.createProjetWithComponents(projet);
             }
 
-            devisView.addDevisView(projet);
+            String devisChoice = validator.validateYesNo(" ==> Do you want to Create Devis?");
+            if (devisChoice.equals("y")) {
+                devisView.addDevisView(projet);
+            }
 
         } else {
             printer.printError("Client not found");
@@ -241,33 +243,6 @@ public class ProjectView {
         } else {
             printer.printError("Failed to update Project");
         }
-    }
-
-    public CostBreakdown calculateCost(List<Composants> composants) {
-        return composants.stream()
-                .map(composant -> {
-                    double baseCost = calculateBaseCost(composant);
-                    double taxAmount = baseCost * (composant.getTaxRate() / 100);
-                    return new CostBreakdown(baseCost, taxAmount);
-                })
-                .reduce(new CostBreakdown(0, 0), (subtotal, element) -> new CostBreakdown(
-                        subtotal.getBaseCost() + element.getBaseCost(),
-                        subtotal.getTaxAmount() + element.getTaxAmount()
-                ));
-    }
-
-    public double calculateBaseCost(Composants composant) {
-        if (composant instanceof Materiaux materiaux) {
-            return materiaux.getUnitCost()
-                    * materiaux.getQuantity()
-                    * materiaux.getQualityCoefficient()
-                    + materiaux.getTransportCost();
-        } else if (composant instanceof MainDoeuvre mainDoeuvre) {
-            return mainDoeuvre.getHourlyRate()
-                    * mainDoeuvre.getWorkHoursCount()
-                    * mainDoeuvre.getProductivityRate();
-        }
-        return 0.0; // or throw an exception for unknown component types
     }
 
 }
