@@ -170,7 +170,7 @@ public class ConsolePrinter {
                 System.out.println(" |                                   MainDoeuvre                                    |");
                 System.out.println(" +----------------------------------------------------------------------------------+");
                 System.out.print(redText);
-                System.out.printf(" | %-15s%-15s%-10s%-15s%-15s%-10s |%n", "Name", "Price", "Hours", "Productivity", "Tax[%]", "Total");
+                System.out.printf(" | %-15s%-15s%-10s%-15s%-15s%-10.2f |%n", "Name", "Price", "Hours", "Productivity", "Tax[%]", "Total");
                 System.out.print(resetText);
                 System.out.print(yellowText);
                 projet.getComposants().stream().filter(composant -> composant instanceof MainDoeuvre).forEach(composants -> {
@@ -237,11 +237,11 @@ public class ConsolePrinter {
         if (devis.getProjet().getProjectName() != null) {
             System.out.println(" | Project's Name    | " + devis.getProjet().getProjectName());
         }
-        System.out.println(" | Project's Cost    | " + devis.getEstimatedPrice());
-        System.out.println(" | Devis is Accepted | " + (devis.getAccepted() ? "Accepted" : "Rejected"));
+        System.out.printf(" | Project's Cost    | %.2f \n", devis.getEstimatedPrice());
+        System.out.println(" | Devis is Accepted | " + (devis.getAccepted() ? "Accepted" : "False"));
         System.out.println(" | Valid Until       | " + devis.getValidityDate().toString());
         System.out.println(" +----------------------------------------+");
-        System.out.println(resetText);
+        System.out.print(resetText);
     }
 
     public void printSuccess(String message) {

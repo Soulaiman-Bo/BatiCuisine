@@ -129,7 +129,7 @@ public class ProjectView {
             costBreakdown.setDiscount(costBreakdown.getProfit() * (projet.getDiscount() / 100));
 
             projet.setTotalCost(costBreakdown.getTotalCost());
-            projet.setProjectStatus(EtatProject.INPROGRESS);
+            projet.setProjectStatus(EtatProject.PENDING);
 
             printer.printCostDetails(costBreakdown);
             String saveChoice = validator.validateYesNo(" ==> Do you want to save this project? ");

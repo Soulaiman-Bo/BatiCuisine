@@ -48,7 +48,7 @@ public class DevisService {
              newdevis.setId(devis.getId());
              return devisRepository.update(newdevis);
          } else {
-             throw new Exception("Invalid Date");
+             throw new Exception("Date of Validity is Expired");
          }
     }
 }

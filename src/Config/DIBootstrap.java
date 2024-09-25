@@ -97,6 +97,7 @@ public class DIBootstrap {
                 bootstrap.resolve(InputValidator.class),
                 bootstrap.resolve(ClientService.class),
                 bootstrap.resolve(DevisService.class),
+                bootstrap.resolve(ProjetService.class),
                 bootstrap.resolve(ConsolePrinter.class)
         ));
 

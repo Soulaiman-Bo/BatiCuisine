@@ -51,12 +51,31 @@ public class DevisView {
         }
     }
 
+
     public void addDevisView(Projet projet) {
         LocalDate issueDate = null;
         LocalDate validity = null;
 
-        issueDate = validator.validateLocalDate(" ==> Entre the issue date  [YYYY-MM-DD]: ");
-        validity = validator.validateLocalDate(" ==> Valid Until [YYYY-MM-DD]: ");
+        issueDate = validator.validateLocalDate(" ==> Enter the issue date [YYYY-MM-DD]: ");
+
+        while (true) {
+            validity = validator.validateLocalDate(" ==> Valid Until [YYYY-MM-DD]: ");
+
+
+            if (validity.isBefore(LocalDate.now())) {
+                System.out.println("Validity date must not be in the past. Please try again.");
+                continue;
+            }
+
+
+            if (issueDate.isAfter(validity)) {
+                System.out.println("Issue date must not be after the validity date. Please try again.");
+                continue;
+            }
+
+            break;
+        }
+
 
         Devis devis = new Devis(
                 null,
@@ -70,6 +89,7 @@ public class DevisView {
         Devis createdDevis = devisService.createDevis(devis);
         printer.printDevis(createdDevis);
     }
+
 
     public void getAllDevis() {
         List<Devis> devisList = devisService.getAllDevis();

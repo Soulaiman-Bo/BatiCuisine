@@ -2,8 +2,11 @@ package Presentation;
 
 import Domain.Entities.Client;
 import Domain.Entities.Devis;
+import Domain.Entities.Projet;
+import Domain.Enums.EtatProject;
 import Services.ClientService;
 import Services.DevisService;
+import Services.ProjetService;
 import Utils.ConsolePrinter;
 import Utils.InputValidator;
 
@@ -18,13 +21,15 @@ public class ClientView {
     InputValidator validator;
     ClientService clientService;
     DevisService devisService;
+    ProjetService projetService;
     ConsolePrinter consolePrinter;
 
-    public ClientView(Scanner scanner, InputValidator validator, ClientService clientService, DevisService devisService, ConsolePrinter consolePrinter) {
+    public ClientView(Scanner scanner, InputValidator validator, ClientService clientService, DevisService devisService, ProjetService projetService, ConsolePrinter consolePrinter) {
         this.scanner = scanner;
         this.validator = validator;
         this.clientService = clientService;
         this.devisService = devisService;
+        this.projetService = projetService;
         this.consolePrinter = consolePrinter;
     }
 
@@ -76,8 +81,10 @@ public class ClientView {
             List<Devis> devisList = devisService.getDevisWithProject(client.get());
 
             for (Devis devis : devisList) {
+                devis.getProjet().setClient(client.get());
                 consolePrinter.printDevis(devis);
             }
+
             String saveChoice = validator.validateYesNo(" ==> Do you want to accept a devis?");
             if (saveChoice.equals("y")) {
 
@@ -87,10 +94,15 @@ public class ClientView {
                         .findFirst()
                         .orElse(null);
 
-                assert currentdevis != null;
-                if (!currentdevis.getAccepted()) {
+
+                if (currentdevis != null && !currentdevis.getAccepted()) {
                     try {
+
                         Devis returnedDevis = devisService.acceptDevis(currentdevis);
+                        Projet projet = currentdevis.getProjet();
+                        projet.setProjectStatus(EtatProject.INPROGRESS);
+                        projetService.updateProjet(projet);
+
                         consolePrinter.printSuccess("Devis Accepted Successfully: ID " + returnedDevis.getId());
                     } catch (Exception e) {
                         consolePrinter.printError(e.getMessage());
