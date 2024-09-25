@@ -1,9 +1,7 @@
 package Services;
 
 import Domain.Entities.MainDoeuvre;
-import Domain.Entities.Materiaux;
 import repositories.MainDoeuvre.MainDoeuvreRepository;
-import repositories.MainDoeuvre.MainDoeuvreRepositoryImpl;
 
 import java.util.List;
 import java.util.Optional;

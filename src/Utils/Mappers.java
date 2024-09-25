@@ -35,7 +35,7 @@ public class Mappers {
     }
 
     static public Devis mapResultSetToDevisAndPorject(ResultSet rs) throws SQLException {
-        Projet projet =  Mappers.mapResultSetToProjet(rs);
+        Projet projet = Mappers.mapResultSetToProjet(rs);
 
         return new Devis(
                 rs.getInt("id"),

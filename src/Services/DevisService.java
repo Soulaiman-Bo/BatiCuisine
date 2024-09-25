@@ -40,15 +40,15 @@ public class DevisService {
     }
 
     public Devis acceptDevis(Devis devis) throws Exception {
-        Devis newdevis  = new Devis();
+        Devis newdevis = new Devis();
         boolean isPast = devis.getValidityDate().isAfter(LocalDate.now());
 
-         if(isPast) {
-             newdevis.setAccepted(true);
-             newdevis.setId(devis.getId());
-             return devisRepository.update(newdevis);
-         } else {
-             throw new Exception("Date of Validity is Expired");
-         }
+        if (isPast) {
+            newdevis.setAccepted(true);
+            newdevis.setId(devis.getId());
+            return devisRepository.update(newdevis);
+        } else {
+            throw new Exception("Date of Validity is Expired");
+        }
     }
 }

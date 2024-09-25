@@ -1,10 +1,10 @@
 package Utils;
 
 import Config.DBConnection;
-import Config.DIBootstrap;
-import Domain.Entities.Client;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DatabaseSeeder {
     DBConnection dbConnection = null;
@@ -175,6 +175,5 @@ public class DatabaseSeeder {
 
         }
     }
-
 
 }

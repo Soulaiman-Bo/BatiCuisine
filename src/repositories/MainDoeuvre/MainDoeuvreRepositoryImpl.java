@@ -2,7 +2,6 @@ package repositories.MainDoeuvre;
 
 import Config.DBConnection;
 import Domain.Entities.MainDoeuvre;
-import Domain.Entities.Materiaux;
 import Utils.Mappers;
 
 import java.sql.*;

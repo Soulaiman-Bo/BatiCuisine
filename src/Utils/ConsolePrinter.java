@@ -170,12 +170,12 @@ public class ConsolePrinter {
                 System.out.println(" |                                   MainDoeuvre                                    |");
                 System.out.println(" +----------------------------------------------------------------------------------+");
                 System.out.print(redText);
-                System.out.printf(" | %-15s%-15s%-10s%-15s%-15s%-10.2f |%n", "Name", "Price", "Hours", "Productivity", "Tax[%]", "Total");
+                System.out.printf(" | %-15s%-15s%-10s%-15s%-15s%-10s |%n", "Name", "Price", "Hours", "Productivity", "Tax[%]", "Total");
                 System.out.print(resetText);
                 System.out.print(yellowText);
                 projet.getComposants().stream().filter(composant -> composant instanceof MainDoeuvre).forEach(composants -> {
                     CostBreakdown costBreakdown = CostCalculator.calculateBaseCostOfMainDoeuvre((MainDoeuvre) composants);
-                    System.out.printf(" | %-15s%-15.1f%-10.1f%-15.1f%-15.1f%-10.1f |%n",
+                    System.out.printf(" | %-15s%-15s%-10s%-15s%-15s%-10.2f |%n",
                             composants.getName(),
                             ((MainDoeuvre) composants).getHourlyRate(),
                             ((MainDoeuvre) composants).getWorkHoursCount(),

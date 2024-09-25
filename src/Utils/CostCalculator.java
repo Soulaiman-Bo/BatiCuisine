@@ -28,20 +28,20 @@ public class CostCalculator {
     }
 
     public static CostBreakdown calculateBaseCostOfMateriaux(Materiaux materiaux) {
-        double baseCost =  materiaux.getUnitCost()
-                * materiaux.getQuantity()
-                * materiaux.getQualityCoefficient()
-                + materiaux.getTransportCost();
+        double baseCost = materiaux.getUnitCost()
+                          * materiaux.getQuantity()
+                          * materiaux.getQualityCoefficient()
+                          + materiaux.getTransportCost();
         double taxAmount = baseCost * (materiaux.getTaxRate() / 100);
         return new CostBreakdown(baseCost, taxAmount);
     }
 
     public static CostBreakdown calculateBaseCostOfMainDoeuvre(MainDoeuvre mainDoeuvre) {
         double baseCost = mainDoeuvre.getHourlyRate()
-                * mainDoeuvre.getWorkHoursCount()
-                * mainDoeuvre.getProductivityRate();
+                          * mainDoeuvre.getWorkHoursCount()
+                          * mainDoeuvre.getProductivityRate();
         double taxAmount = baseCost * (mainDoeuvre.getTaxRate() / 100);
         return new CostBreakdown(baseCost, taxAmount);
     }
-    
+
 }

@@ -14,7 +14,7 @@ public class Projet {
     private Double discount;
     private EtatProject projectStatus;
     private Client client;
-    List<Composants> composants;
+    private List<Composants> composants;
 
     public Projet(Integer id, String projectName, Double profit, Double totalCost, Double discount, EtatProject projectStatus) {
         this.id = id;

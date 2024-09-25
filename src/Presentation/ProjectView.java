@@ -151,7 +151,6 @@ public class ProjectView {
 
     public void getDetailsOfProject() {
         Integer projectId = validator.validateInteger(" ==> Entre Projects's ID: ");
-        scanner.nextLine();
 
         Projet project = projetService.getProjetWithComponents(projectId);
 

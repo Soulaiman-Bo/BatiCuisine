@@ -32,6 +32,7 @@ public class ClientService {
     public boolean deleteClient(Integer id) {
         return clientRepository.deleteById(id);
     }
+
     public Client upddateClient(Client client) {
         return clientRepository.update(client);
     }

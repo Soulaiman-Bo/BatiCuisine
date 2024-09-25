@@ -1,29 +1,30 @@
 package Presentation;
 
 import Utils.ConsolePrinter;
+import Utils.InputValidator;
 
 import java.util.Scanner;
 
 public class MainView {
 
     ProjectView projectView;
+    InputValidator inputValidator;
     ClientView clientView;
     DevisView devisView;
     ConsolePrinter consolePrinter;
-    Scanner scanner;
 
-    public MainView(ProjectView projectView, ClientView clientView, DevisView devisView, ConsolePrinter consolePrinter, Scanner scanner) {
+    public MainView(ProjectView projectView, InputValidator inputValidator, ClientView clientView, DevisView devisView, ConsolePrinter consolePrinter) {
         this.projectView = projectView;
+        this.inputValidator = inputValidator;
         this.clientView = clientView;
         this.devisView = devisView;
         this.consolePrinter = consolePrinter;
-        this.scanner = scanner;
     }
 
     public void main() {
         while (true) {
             consolePrinter.mainMenu();
-            int choice = scanner.nextInt();
+            int choice = inputValidator.validateInteger("");
 
             switch (choice) {
                 case 1:

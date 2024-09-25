@@ -5,13 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
+    private static final String URL = System.getenv("URL");
+    private static final String USER = System.getenv("USER");
+    private static final String PASSWORD = System.getenv("PASSWORD");
     private static DBConnection instance;
     private final Connection connection;
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/javapostgres";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "postgres";
-    
     private DBConnection() {
         Connection tempConnection = null;
         try {
@@ -21,11 +20,11 @@ public class DBConnection {
         }
         this.connection = tempConnection;
     }
-    
+
     public static DBConnection getInstance() throws SQLException {
         if (instance == null) {
             instance = new DBConnection();
-        }else if (instance.getConnection().isClosed()) {
+        } else if (instance.getConnection().isClosed()) {
             instance = new DBConnection();
         }
         return instance;

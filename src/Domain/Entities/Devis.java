@@ -18,6 +18,7 @@ public class Devis {
         this.accepted = accepted;
         this.projet = projet;
     }
+
     public Devis() {
     }
 
